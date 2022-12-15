@@ -1,5 +1,3 @@
-require('dotenv').config();
-
 export default {
     // Disable server-side rendering (https://go.nuxtjs.dev/ssr-mode)
     ssr: false,
@@ -37,7 +35,6 @@ export default {
         // https://go.nuxtjs.dev/bootstrap
         'bootstrap-vue/nuxt',
         // https://go.nuxtjs.dev/axios
-        '@nuxtjs/axios',
     ],
 
     router: {
