@@ -6,4 +6,33 @@ export default {
     //Bearer Token Refresh Interval (minutes)
     bearer_token_refresh_mins: 1,
 
+    //Map Settings (This part is required in common.js)
+    map: {
+        earth_radius_km: 6371.0088,
+        latitude_min: +32,
+        latitude_max: +41,
+        longitude_min: +150.162783813,
+        longitude_max: +165.837216187,
+    },
+    
+    //Basemap
+    basemap: {
+        src: "/storage/app/media/hongon-base-map.svg",
+        width: 7000,
+        height: 5000,
+    },
+
+    //Map Zomming
+    zoom: {
+        logzoom_max: 3, //log10(pixels/km)
+        logzoom_default: 1,
+        logzoom_step_scroll: 0.2,
+        logzoom_step_button: 0.2,
+    },
+
+    //Mileage
+    mileage: {
+        decimals: 1,
+    }
+
 };
