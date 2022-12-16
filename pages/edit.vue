@@ -1,7 +1,7 @@
 <script>
 import axios from '~/plugins/axios'
 import _ from '~/config.js'
-const $ = require('~/common.js');
+import $ from '~/common.js';
 
 export default {
     data(){
