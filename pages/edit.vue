@@ -2,6 +2,7 @@
 import axios from '~/plugins/axios'
 import _ from '~/config.js'
 import $ from '~/common.js';
+import MapMain from '~/components/map-main.vue';
 
 export default {
     data(){
@@ -43,7 +44,5 @@ export default {
 </script>
 
 <template>
-    <div class="container">
-        Placeholder Map Editing Page
-    </div>
+    <MapMain editable />
 </template>

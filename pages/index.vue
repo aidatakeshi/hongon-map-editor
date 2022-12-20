@@ -1,11 +1,12 @@
 <script>
 import axios from '~/plugins/axios'
 import $ from '~/common.js';
+import MapMain from '~/components/map-main.vue';   
 
 export default {
     data(){
         return {
-            test: {},
+            test: null,
         };
     },
     async mounted(){
@@ -15,7 +16,5 @@ export default {
 </script>
 
 <template>
-    <div class="container">
-        Placeholder Map Viewing Page
-    </div>
+    <MapMain />
 </template>

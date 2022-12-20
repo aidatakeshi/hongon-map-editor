@@ -2,14 +2,17 @@
  * Bearer Token
  */
 exports.saveBearerToken = function(token){
+    if (!localStorage) return false;
     localStorage.setItem('access_token', token);
 };
 
 exports.clearBearerToken = function(){
+    if (!localStorage) return false;
     localStorage.removeItem('access_token');
 };    
 
 exports.getBearerToken = function(omitBearer = false){
+    if (!localStorage) return false;
     var bearer = (omitBearer) ? '' : 'Bearer ';
     var token = localStorage.getItem('access_token');
     return (token == null) ? '' : (bearer + token);
@@ -60,28 +63,3 @@ async function callAPI(axios, APIMethod, APIRoute, data = {}, tokenRequired = tr
     return { _status: response.status, ...(response.data || {}) };
 }
 exports.callAPI = callAPI;
-
-/**
- * Pixel - Coordincate Conversion
- */
-const map = require('~/config.js').default.map;
-const kmPerLatitudeDeg = map.earth_radius_km * Math.PI * 2 / 360;
-
-function checkValidNumbers(values){
-    for (var val of values){
-        if (val === null) return false;
-        if (!isFinite(val)) return false;
-    }
-    return true;
-}
-
-exports.getPixelsPerLatitudeDeg = function(logzoom){
-    if (!checkValidNumbers([logzoom])) return null;
-    return 10**logzoom * kmPerLatitudeDeg;
-};
-
-exports.getPixelsPerLongitudeDeg = function(logzoom, latitude_mid){
-    if (!checkValidNumbers([logzoom, latitude_mid])) return null;
-    return 10**logzoom * kmPerLatitudeDeg * Math.cos(Math.PI / 180 * latitude_mid);
-};
-
