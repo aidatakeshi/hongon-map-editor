@@ -1,5 +1,3 @@
-import state from "./state";
-
 export default {
 
     //Screen Display
@@ -103,49 +101,5 @@ export default {
     hidden_lines: (state, value) => state.display.hidden_lines = Array.isArray(value) ? value : [],
     hidden_operator_types: (state, value) => state.display.hidden_operator_types = Array.isArray(value) ? value : [],
     hidden_operators: (state, value) => state.display.hidden_operators = Array.isArray(value) ? value : [],
-
-    //Data
-    regions_broader(state, value_arr){
-        if (Array.isArray(value_arr)) state.data.region_broader = value_arr;
-    },
-    region_broader(state, value_obj){
-        if (value_obj.id) state.data.region_broader[value_obj.id] = value_obj;
-    },
-    regions(state, value_arr){
-        if (Array.isArray(value_arr)) state.data.region = value_arr;
-    },
-    region(state, value_obj){
-        if (value_obj.id) state.data.region[value_obj.id] = value_obj;
-    },
-    ref_images(state, value_arr){
-        if (Array.isArray(value_arr)) state.data.ref_image = value_arr;
-    },
-    ref_image(state, value_obj){
-        if (value_obj.id) state.data.ref_image[value_obj.id] = value_obj;
-    },
-    line_types(state, value_arr){
-        if (Array.isArray(value_arr)) state.data.line_type = value_arr;
-    },
-    line_type(state, value_obj){
-        if (value_obj.id) state.data.line_type[value_obj.id] = value_obj;
-    },
-    lines(state, value_arr){
-        if (Array.isArray(value_arr)) state.data.line = value_arr;
-    },
-    line(state, value_obj){
-        if (value_obj.id) state.data.line[value_obj.id] = value_obj;
-    },
-    line_sections(state, value_arr){
-        if (Array.isArray(value_arr)) state.data.line_section = value_arr;
-    },
-    line_section(state, value_obj){
-        if (value_obj.id) state.data.line_section[value_obj.id] = value_obj;
-    },
-    stations(state, value_arr){
-        if (Array.isArray(value_arr)) state.data.station = value_arr;
-    },
-    station(state, value_obj){
-        if (value_obj.id) state.data.station[value_obj.id] = value_obj;
-    },
 
 };

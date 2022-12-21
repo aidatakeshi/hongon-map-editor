@@ -22,10 +22,10 @@ export default {
         //Get Data From LocalStorage
         await this.$store.dispatch('get_LS');
         //Get Data From APIs
-        await this.$store.dispatch('get_data_region');
-        await this.$store.dispatch('get_data_ref_image');
-        await this.$store.dispatch('get_data_line');
-        await this.$store.dispatch('get_data_station');
+        await this.$store.dispatch('data/get_data_region');
+        await this.$store.dispatch('data/get_data_ref_image');
+        await this.$store.dispatch('data/get_data_line');
+        await this.$store.dispatch('data/get_data_station');
     },
 
     methods: {
@@ -36,5 +36,10 @@ export default {
 
 <template>
     <div class="map-wrapper">
+        <!-- Canvas -->
+
+        <!-- Panel -->
+
+        <!-- Menu -->
     </div>
 </template>
