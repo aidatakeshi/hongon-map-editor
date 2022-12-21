@@ -3,9 +3,9 @@ import $ from '~/common.js';
 
 export default {
 
-    async get_LS({ state, commit }) {
+    async getLS({ state, commit }) {
         if (!localStorage) return false;
-        console.log('LocalStorage: Getting Data');
+        console.log('%c LocalStorage: Getting Data', 'color: fuchsia;');
         //Numeric
         for (let attr of ['x', 'y', 'logzoom']){
             const value = localStorage.getItem(attr);
@@ -21,17 +21,17 @@ export default {
         }catch(error){}
     },
 
-    async set_LS_xyzoom({ state, commit }) {
+    async setLSXYZoom({ state, commit }) {
         if (!localStorage) return false;
-        console.log('LocalStorage: Saving x/y/zoom Data');
+        console.log('%c LocalStorage: Saving x/y/zoom Data', 'color: fuchsia;');
         for (let attr of ['x', 'y', 'logzoom']){
             localStorage.setItem(attr, state[attr]);
         }
     },
 
-    async set_LS_display({ state, commit }) {
+    async setLSDisplay({ state, commit }) {
         if (!localStorage) return false;
-        console.log('LocalStorage: Saving display Data');
+        console.log('%c LocalStorage: Saving display Data', 'color: fuchsia;');
         localStorage.setItem('display', JSON.stringify(state.display));
     },
 
