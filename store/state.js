@@ -1,13 +1,13 @@
-const config_map = require('~/config.js').default.map;
+import config from '~/config.js';
 
 export default () => ({
 
     //Screen Display
     screen_width: window ? window.innerWidth : null,
     screen_height: window ? window.innerHeight : null,
-    x: (config_map.longitude_min + config_map.longitude_max) / 2,
-    y: (config_map.latitude_min + config_map.latitude_max) / 2,
-    logzoom: 0,
+    x: (config.map.longitude_min + config.map.longitude_max) / 2,
+    y: (config.map.latitude_min + config.map.latitude_max) / 2,
+    logzoom: config.zoom.logzoom_default,
 
     //Cursor
     cursor_x: null,

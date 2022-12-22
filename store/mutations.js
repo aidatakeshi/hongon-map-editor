@@ -1,3 +1,5 @@
+import config from '~/config.js';
+
 export default {
 
     //Screen Display
@@ -27,7 +29,10 @@ export default {
         if (Number.isFinite(value)) state.logzoom = value;
     },
     logzoom_step(state, value){
-        if (Number.isFinite(value)) state.logzoom += value;
+        if (Number.isFinite(value)){
+            const {logzoom_step_unit} = config.zoom;
+            state.logzoom = Math.round((state.logzoom + value) / logzoom_step_unit) * logzoom_step_unit;
+        }
     },
     cursor_x(state, value){
         if (Number.isFinite(value)) state.cursor_x = value;
@@ -46,9 +51,9 @@ export default {
     
     //Screen States
     is_loading: (state) => state.is_loading = true,
-    not_loading: (state) => state.not_loading = true,
+    not_loading: (state) => state.not_loading = false,
     is_dragging: (state) => state.is_dragging = true,
-    not_dragging: (state) => state.not_dragging = true,
+    not_dragging: (state) => state.not_dragging = false,
     info_panel_open: (state) => state.info_panel_open = true,
     info_panel_close: (state) => state.info_panel_open = false,
     info_panel_toggle: (state) => state.info_panel_open = !state.info_panel_open,

@@ -21,7 +21,7 @@ exports.getBearerToken = function(omitBearer = false){
 /**
  * API Call
  */
-async function callAPI(axios, APIMethod, APIRoute, data = {}, tokenRequired = true){
+async function callAPI(unused, APIMethod, APIRoute, data = {}, tokenRequired = true){
     //Try Calling API
     try {
         var options = {};

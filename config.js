@@ -24,15 +24,11 @@ export default {
 
     //Map Zomming
     zoom: {
-        logzoom_max: 3, //log10(pixels/km)
-        logzoom_default: 1,
-        logzoom_step_scroll: 0.2,
+        logzoom_max: 2, //log10(pixels/km)
+        logzoom_default: 0,
+        logzoom_step_scroll: 0.1,
         logzoom_step_button: 0.2,
+        logzoom_step_unit: 0.1,
     },
-
-    //Mileage
-    mileage: {
-        decimals: 1,
-    }
 
 };

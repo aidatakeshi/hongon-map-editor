@@ -1,7 +1,8 @@
 <script>
 import axios from '~/plugins/axios';
-import _ from '~/config.js';
 import $ from '~/common.js';
+
+import MapCanvasMain from './map-canvas/main.vue';
 
 export default {
     props: {
@@ -9,22 +10,7 @@ export default {
     },
 
     components: {
-        
-    },
-
-    data(){
-        return {
-            
-        };
-    },
-
-    async mounted(){
-        //Get Data From LocalStorage
-        await this.$store.dispatch('getLS');
-    },
-
-    methods: {
-        
+        MapCanvasMain,
     },
 }
 </script>
@@ -32,9 +18,13 @@ export default {
 <template>
     <div class="map-wrapper">
         <!-- Canvas -->
+        <MapCanvasMain :editable="editable" />
 
         <!-- Panel -->
+        <div style="position: absolute; left: 0; top: 0; background-color: white;">Dummy</div>
 
         <!-- Menu -->
+
+        
     </div>
 </template>

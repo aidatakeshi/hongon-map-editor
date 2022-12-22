@@ -13,3 +13,9 @@
         <Nuxt />
     </div>
 </template>
+
+<style>
+    body {
+        overflow: hidden !important; /* Hide scrollbars */
+    }
+</style>

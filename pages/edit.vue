@@ -1,6 +1,5 @@
 <script>
 import axios from '~/plugins/axios'
-import _ from '~/config.js'
 import $ from '~/common.js';
 import MapMain from '~/components/map-main.vue';
 
