@@ -71,15 +71,33 @@ export default {
         },
 
         handleBaseMapTouchStart(event){
-            
+            this.$store.commit('is_dragging');
+            this.handleBaseMapClicked(event);
         },
 
         handleBaseMapTouchMove(event){
+            const [touch1, touch2] = event.evt.touches;
+            if (!touch1 || !touch2) return false;
+            //Proceed
+            const [dx, dy] = [touch2.clientX - touch1.clientX, touch2.clientY - touch1.clientY];
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            const {logzoom} = this.$store.state;
+            //If touch_initial_dist not set, setup it now
+            if (!this.$store.state.touch_initial_logzoom){
+                this.$store.commit('touch_initial_logzoom', logzoom);
+                this.$store.commit('touch_initial_dist', dist);
+            }
+            //Update logzoom
+            const {touch_initial_logzoom, touch_initial_dist} = this.$store.state;
+            this.$store.commit('logzoom', touch_initial_logzoom + Math.log10(dist / touch_initial_dist));
+            //Constraint X/Y/Zoom
             this.constraintXYZoom();
         },
 
         handleBaseMapTouchEnd(event){
-            
+            this.$store.commit('touch_initial_logzoom', null);
+            this.$store.commit('touch_initial_dist', null);
+            this.$store.commit('not_dragging');
         },
 
         constraintXYZoom(target = null){

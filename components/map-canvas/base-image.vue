@@ -39,8 +39,7 @@ export default {
             const {x, y, screen_width, screen_height} = this.$store.state;
             const basemap = this.$config.basemap;
             return {
-                //draggable: this.touchLastDist ? false : draggable,
-                draggable: true,
+                draggable: !this.$store.state.touch_initial_logzoom,
                 scaleX: px_per_long_deg * longitude_span / basemap.width,
                 scaleY: px_per_lat_deg * latitude_span / basemap.height,
                 x: screen_width / 2 - px_per_long_deg * (x - longitude_mid),

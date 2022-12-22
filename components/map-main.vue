@@ -42,7 +42,9 @@ export default {
         <MapCanvasMain :editable="editable" />
 
         <!-- Panel -->
-        <div style="position: absolute; left: 0; top: 0; background-color: white;">Dummy</div>
+        <div style="position: absolute; left: 0; top: 0; background-color: white;">
+            FUCK
+        </div>
 
         <!-- Menu -->
 

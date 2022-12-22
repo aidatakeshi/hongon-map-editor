@@ -48,6 +48,14 @@ export default {
         state.cursor_x = null;
         state.cursor_y = null;
     },
+
+    //Dragging / Touching
+    touch_initial_dist(state, value = null){
+        state.touch_initial_dist = Number.isFinite(value) ? value : null;
+    },
+    touch_initial_logzoom(state, value = null){
+        state.touch_initial_logzoom = Number.isFinite(value) ? value : null;
+    },
     
     //Screen States
     is_loading: (state) => state.is_loading = true,

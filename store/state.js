@@ -12,6 +12,10 @@ export default () => ({
     //Cursor
     cursor_x: null,
     cursor_y: null,
+
+    //Dragging / Touching
+    touch_initial_dist: null,
+    touch_initial_logzoom: null,
     
     //Screen States
     is_loading: false,
