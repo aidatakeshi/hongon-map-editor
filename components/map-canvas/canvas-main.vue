@@ -1,7 +1,4 @@
 <script>
-import axios from '~/plugins/axios';
-import $ from '~/common.js';
-
 import map_handlers_mx from '~/mixian/map-handlers.mx.js';
 
 import MapCanvasBaseImage from './base-image.vue';
@@ -22,20 +19,6 @@ export default {
     data(){
         return {
         };
-    },
-
-    async mounted(){
-        //Get Data From LocalStorage
-        await this.$store.dispatch('getLS');
-        //Apply X/Y/Zoom Constraint Once
-        this.constraintXYZoom();
-        //Initialize Listeners
-        this.initializeListeners();
-    },
-
-    beforeDestroy(){
-        //Remove Listeners
-        this.removeListeners();
     },
 
     methods: {

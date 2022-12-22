@@ -1,17 +1,38 @@
 <script>
-import axios from '~/plugins/axios';
-import $ from '~/common.js';
+import map_handlers_mx from '~/mixian/map-handlers.mx.js';
+import map_data_mx from '~/mixian/map-data.mx.js';
 
-import MapCanvasMain from './map-canvas/main.vue';
+import MapCanvasMain from './map-canvas/canvas-main.vue';
 
 export default {
     props: {
         editable: { type: Boolean, default: false },
     },
 
+    mixins: [
+        map_handlers_mx, map_data_mx,
+    ],
+
     components: {
         MapCanvasMain,
     },
+
+    async mounted(){
+        //Get Data From LocalStorage
+        this.$store.dispatch('getLS');
+        //Apply X/Y/Zoom Constraint Once
+        this.constraintXYZoom();
+        //Initialize Listeners
+        this.initializeListeners();
+        //Initialize Data
+        this.initializeData();
+    },
+
+    beforeDestroy(){
+        //Remove Listeners
+        this.removeListeners();
+    },
+
 }
 </script>
 

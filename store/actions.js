@@ -1,9 +1,6 @@
-import axios from '~/plugins/axios';
-import $ from '~/common.js';
-
 export default {
 
-    async getLS({ state, commit }) {
+    getLS({ state, commit }) {
         if (!localStorage) return false;
         console.log('%c LocalStorage: Getting Data', 'color: fuchsia;');
         //Numeric
@@ -21,7 +18,7 @@ export default {
         }catch(error){}
     },
 
-    async setLSXYZoom({ state, commit }) {
+    setLSXYZoom({ state, commit }) {
         if (!localStorage) return false;
         console.log('%c LocalStorage: Saving x/y/zoom Data', 'color: fuchsia;');
         for (let attr of ['x', 'y', 'logzoom']){
@@ -29,7 +26,7 @@ export default {
         }
     },
 
-    async setLSDisplay({ state, commit }) {
+    setLSDisplay({ state, commit }) {
         if (!localStorage) return false;
         console.log('%c LocalStorage: Saving display Data', 'color: fuchsia;');
         localStorage.setItem('display', JSON.stringify(state.display));

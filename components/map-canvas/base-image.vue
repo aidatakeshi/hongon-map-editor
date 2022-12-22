@@ -1,5 +1,4 @@
 <script>
-
 import map_handlers_mx from '~/mixian/map-handlers.mx.js';
 
 export default {
