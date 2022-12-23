@@ -18,8 +18,7 @@ export default {
     //Basemap
     basemap: {
         src: "/storage/app/media/hongon-base-map.svg",
-        width: 7000,
-        height: 5000,
+        width: 7000, height: 5000,
     },
 
     //Map Zomming
@@ -30,6 +29,37 @@ export default {
         logzoom_step_button: 0.2,
         logzoom_step_unit: 0.1,
         save_ls_after_scroll: 1000, //In ms
+    },
+
+    //Lat / Long Lines
+    lat_long_lines: {
+        stroke: '#304968', strokeWidth: 1,
+        opacity: 0.3,
+    },
+    lat_long_label: {
+        fill: '#304968',
+        fontSize: 10,
+        opacity: 0.6,
+        x_shift: 2, y_shift: 2,
+    },
+
+    //Map Scale
+    scale: {
+        width_max: 190,
+        height: 8,
+        x_shift: 12, y_shift: 12,
+    },
+    scale_line: {
+        stroke: 'black',
+        strokeWidth: 2,
+        opacity: 0.8,
+    },
+    scale_label: {
+        fill: 'black',
+        fontStyle: 'bold',
+        fontSize: 10,
+        opacity: 0.8,
+        y_shift: 20,
     },
 
 };
