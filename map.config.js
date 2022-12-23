@@ -29,6 +29,7 @@ export default {
         logzoom_step_scroll: 0.1,
         logzoom_step_button: 0.2,
         logzoom_step_unit: 0.1,
+        save_ls_after_scroll: 1000, //In ms
     },
 
 };

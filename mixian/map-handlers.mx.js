@@ -1,5 +1,11 @@
 export default {
 
+    data(){
+        return {
+            save_ls_after_scroll_timer: null,
+        };
+    },
+
     methods: {
 
         initializeListeners(){
@@ -29,11 +35,17 @@ export default {
             this.$store.commit('logzoom_step', scroll_step);
             //Make Constraint
             this.constraintXYZoom();
-            //Log Console
-            const {logzoom} = this.$store.state;
-            console.log(`%c Scrolled: logzoom = ${logzoom}`, 'color: yellow;');
-            //Save to LocalStorage
-            this.$store.dispatch('setLSXYZoom');
+            //Handle Timeout
+            if (this.save_ls_after_scroll_timer){
+                clearTimeout(this.save_ls_after_scroll_timer);
+            }
+            this.save_ls_after_scroll_timer = setTimeout(function(){
+                //Log Console
+                const {logzoom} = this.$store.state;
+                console.log(`%c Scrolled: logzoom = ${logzoom}`, 'color: yellow;');
+                //Save to LocalStorage
+                this.$store.dispatch('setLSXYZoom');
+            }.bind(this), this.$config.zoom.save_ls_after_scroll);
         },
 
         handleBaseMapClicked(event){
@@ -65,7 +77,7 @@ export default {
             this.$store.commit('not_dragging');
             //Log Console
             const {x, y} = this.$store.state;
-            console.log(`%c Drag End: long_x = ${x}; lat_y = ${y}`, 'color: yellow;');
+            console.log(`%c Dragged: long_x = ${x}; lat_y = ${y}`, 'color: yellow;');
             //Save to LocalStorage
             this.$store.dispatch('setLSXYZoom');
         },
