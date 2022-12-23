@@ -46,6 +46,14 @@ export default {
                 y: screen_height / 2 + px_per_lat_deg * (y - latitude_mid),
             };
         },
+        baseImage_xywh(){
+            return {
+                x: -this.$config.basemap.width /2,
+                y: -this.$config.basemap.height /2,
+                width: this.$config.basemap.width,
+                height: this.$config.basemap.height,
+            };
+        },
     },
 }
 </script>
@@ -56,12 +64,18 @@ export default {
         @touchstart="handleBaseMapTouchStart" @touchmove="handleBaseMapTouchMove" @touchend="handleBaseMapTouchEnd"
         @dragstart="handleBaseMapDragStart" @dragmove="handleBaseMapDragMove" @dragend="handleBaseMapDragEnd"
     >
+        <!-- Listening Area -->
+        <v-rect :config="{
+            fill: 'black',
+            ...baseImage_xywh,
+        }" />
+
+        <!-- Base Image (SVG) -->
         <v-image :config="{
             image: baseImage,
-            x: -this.$config.basemap.width /2,
-            y: -this.$config.basemap.height /2,
-            width: this.$config.basemap.width,
-            height: this.$config.basemap.height,
+            ...baseImage_xywh,
+            listening: false,
         }" v-if="baseImage" />
+
     </v-layer>
 </template>

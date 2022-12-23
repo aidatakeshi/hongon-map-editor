@@ -1,7 +1,4 @@
 <script>
-import axios from '~/plugins/axios'
-import $ from '~/common.js';
-
 export default {
     data(){
         return {
@@ -12,13 +9,13 @@ export default {
     },
     async mounted(){
         //If already logged in -> push to /edit
-        if ($.getBearerToken()){
+        if (this.$getBearerToken()){
             this.$router.push('/edit');
         }
     },
     methods: {
         async submitLogin(){
-            const response = await $.callAPI(axios, "POST", "login", {
+            const response = await this.$POST("login", {
                 email: this.email,
                 password: this.password,
             }, false);
@@ -28,7 +25,7 @@ export default {
                 return true;
             }
             const bearer_token = response.token;
-            $.saveBearerToken(bearer_token);
+            this.$saveBearerToken(bearer_token);
             console.log('Login: Successful');
             return this.$router.push('/edit');
         },

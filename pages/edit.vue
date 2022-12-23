@@ -1,25 +1,25 @@
 <script>
-import axios from '~/plugins/axios'
-import $ from '~/common.js';
 import MapMain from '~/components/map-main.vue';
 
 export default {
     data(){
         return {
+            authPassed: false,
             tokenRefreshing: null,
         };
     },
 
     async mounted(){
         //Verify Myself
-        const response = await $.callAPI(axios, "POST", "hongon", {});
+        const response = await this.$POST("hongon", {});
         if (response._status != 200){
-            $.clearBearerToken();
+            this.$clearBearerToken();
             console.log('Forced Logout');
             return this.$router.push('/login');
         }
+        this.authPassed = true;
         //Setup Token Refreshing Mechanism
-        const interval = (_.bearer_token_refresh_mins || 5) * 60000;
+        const interval = (this.$config.bearer_token_refresh_mins || 5) * 60000;
         this.tokenRefreshing = setInterval(this.refreshBearerToken, interval);
     },
 
@@ -32,7 +32,7 @@ export default {
         async refreshBearerToken(){
             const response = await $.callAPI(axios, "POST", "refresh", {});
             if (response._status == 200){
-                $.saveBearerToken(response.token);
+                this.$saveBearerToken(response.token);
                 console.log('Refresh Bearer Token: Successful');
             }else{
                 console.log('Refresh Bearer Token: Failed');
@@ -43,5 +43,5 @@ export default {
 </script>
 
 <template>
-    <MapMain editable />
+    <MapMain editable v-if="authPassed" />
 </template>

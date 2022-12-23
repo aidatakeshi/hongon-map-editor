@@ -1,4 +1,4 @@
-import config from '~/config.js';
+import config from '~/map.config.js';
 
 export default {
 

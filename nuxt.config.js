@@ -22,6 +22,7 @@ export default {
 
     // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
     plugins: [
+        '@/plugins/common.js',
         '@/plugins/config-loader.js',
         '@/plugins/vue-konva.client.js',
     ],

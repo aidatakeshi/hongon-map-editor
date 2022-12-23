@@ -1,6 +1,3 @@
-import axios from '~/plugins/axios'
-import $ from '~/common.js';
-
 const dataTypes = {
     'region_broader': 'region-broader',
     'region': 'region',
@@ -33,11 +30,10 @@ export default {
 
         async getDataOfType(type){
             if (!dataTypes[type]) return false;
-            const response = await $.callAPI(axios, 'GET', `hongon/${dataTypes[type]}`, {}, false);
+            const response = await this.$GET(`hongon/${dataTypes[type]}`, {}, false);
             this.$store.commit(`data/${type}`, response.data);
             return response;
         },
-
 
     },
 }
