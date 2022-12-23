@@ -30,7 +30,7 @@ export default {
 
     methods: {
         async refreshBearerToken(){
-            const response = await $.callAPI(axios, "POST", "refresh", {});
+            const response = await this.$POST("refresh", {});
             if (response._status == 200){
                 this.$saveBearerToken(response.token);
                 console.log('Refresh Bearer Token: Successful');
