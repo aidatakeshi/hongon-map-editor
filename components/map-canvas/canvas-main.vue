@@ -2,6 +2,7 @@
 import map_handlers_mx from '~/mixian/map-handlers.mx.js';
 
 import MapCanvasBaseImage from './base-image.vue';
+import MapCanvasRefImages from './ref-images.vue';
 
 export default {
     props: {
@@ -40,13 +41,17 @@ export default {
     <v-stage :config="stageConfig" @wheel="handleWheelRoll">
 
         <!-- Base Image (Draggable) -->
-        <MapCanvasBaseImage />
+        <MapCanvasBaseImage :editable="editable" />
 
         <!-- Ref Images -->
+        <MapCanvasRefImages v-if="editable" />
 
         <!-- Lines -->
 
         <!-- Stations -->
+
+        <!-- Lat/Long Lines, Ruler -->
+        
 
     </v-stage>
 </template>
