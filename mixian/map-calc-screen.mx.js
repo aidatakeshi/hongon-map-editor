@@ -26,6 +26,23 @@ export default {
         },
 
         /**
+         * Get Width / Height
+         */
+        getScreenWidth(longitude_x1, longitude_x2){
+            if (longitude_x1 === null || !Number.isFinite(longitude_x1)) return null;
+            if (longitude_x2 === null || !Number.isFinite(longitude_x2)) return null;
+            const {px_per_long_deg} = this.$store.getters;
+            return Math.abs(longitude_x1 - longitude_x2) * px_per_long_deg;
+        },
+
+        getScreenHeight(latitude_y1, latitude_y2){
+            if (latitude_y1 === null || !Number.isFinite(latitude_y1)) return null;
+            if (latitude_y2 === null || !Number.isFinite(latitude_y2)) return null;
+            const {px_per_lat_deg} = this.$store.getters;
+            return Math.abs(latitude_y1 - latitude_y2) * px_per_lat_deg;
+        },
+
+        /**
          * Get long/lat positions on map, by X/Y positions on screen
          */
         getLongitude(screen_x){

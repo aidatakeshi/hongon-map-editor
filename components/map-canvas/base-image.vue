@@ -60,7 +60,7 @@ export default {
 </script>
 
 <template>
-    <v-layer ref="layer_base_map" :config="baseMapConfig"
+    <v-layer :config="baseMapConfig"
         @mouseup="handleBaseMapClicked" @contextmenu="handleBaseMapRightClicked"
         @touchstart="handleBaseMapTouchStart" @touchmove="handleBaseMapTouchMove" @touchend="handleBaseMapTouchEnd"
         @dragstart="handleBaseMapDragStart" @dragmove="handleBaseMapDragMove" @dragend="handleBaseMapDragEnd"

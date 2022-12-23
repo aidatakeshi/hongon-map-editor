@@ -170,7 +170,6 @@ export default {
                 target.setAttr('x', screen_width / 2 - px_per_long_deg * (x - longitude_mid));
                 target.setAttr('y', screen_height / 2 + px_per_lat_deg * (y - latitude_mid));
             }
-
         },
 
     },
