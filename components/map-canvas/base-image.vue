@@ -21,11 +21,12 @@ export default {
     },
 
     async mounted(){
+        //Load Base Image According to Config
         const myImage = new Image();
+        myImage.src = this.$config.basemap.src;
         myImage.onload = function(){
             this.baseImage = myImage;
         }.bind(this);
-        myImage.src = this.$config.basemap.src;
     },
 
     methods: {
