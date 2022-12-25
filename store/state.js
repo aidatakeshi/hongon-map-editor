@@ -42,7 +42,7 @@ export default () => ({
         show_stations_not_in_use: true,
         show_stations_signal_only: true,
         lock_stations: false,
-        line_color: "line_type",
+        line_color: "default",
         hidden: {
             line_type: [],
             line: [],

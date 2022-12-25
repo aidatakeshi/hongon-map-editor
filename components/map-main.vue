@@ -64,7 +64,7 @@ export default {
             <!-- Lines -->
             <LayerLines :editable="editable" />
             <!-- Stations -->
-            <LayerStaions :editable="editable" />
+            <LayerStations :editable="editable" />
             <!-- Lat/Long Lines, Scale -->
             <LayerOverlay :editable="editable" />
         </v-stage>

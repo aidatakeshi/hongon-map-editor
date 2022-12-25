@@ -23,5 +23,11 @@ export default {
     station(state, value_arr){
         if (Array.isArray(value_arr)) state.station = value_arr;
     },
+    operator_type(state, value_arr){
+        if (Array.isArray(value_arr)) state.operator_type = value_arr;
+    },
+    operator(state, value_arr){
+        if (Array.isArray(value_arr)) state.operator = value_arr;
+    },
 
 };

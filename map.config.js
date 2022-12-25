@@ -32,15 +32,17 @@ export default {
     },
 
     //Lat / Long Lines
-    lat_long_lines: {
-        stroke: '#304968', strokeWidth: 1,
-        opacity: 0.3,
-    },
-    lat_long_label: {
-        fill: '#304968',
-        fontSize: 10,
-        opacity: 0.6,
-        x_shift: 2, y_shift: 2,
+    lat_long: {
+        line: {
+            stroke: '#304968', strokeWidth: 1,
+            opacity: 0.3,
+        },
+        label: {
+            fill: '#304968',
+            fontSize: 10,
+            opacity: 0.6,
+            x_shift: 2, y_shift: 2,
+        },
     },
 
     //Map Scale
@@ -48,18 +50,47 @@ export default {
         width_max: 190,
         height: 8,
         x_shift: 12, y_shift: 12,
+        line: {
+            stroke: 'black',
+            strokeWidth: 2,
+            opacity: 0.8,
+        },
+        label: {
+            fill: 'black',
+            fontStyle: 'bold',
+            fontSize: 10,
+            opacity: 0.8,
+            y_shift: 20,
+        },
     },
-    scale_line: {
-        stroke: 'black',
-        strokeWidth: 2,
-        opacity: 0.8,
-    },
-    scale_label: {
-        fill: 'black',
-        fontStyle: 'bold',
-        fontSize: 10,
-        opacity: 0.8,
-        y_shift: 20,
+
+    //Line
+    line: {
+        byType: {
+            //Major Line
+            "3": {
+                lineWidth: {px: 6, km: 0.2},
+                decoration: {
+                    width: {px: 3, km: 0.1},
+                    color: 'rgba(255, 255, 255, 0.8)',
+                    dash: {px: 9, km: 0.3},
+                },
+            },
+            //Default Line
+            "default": {
+                lineWidth: {px: 4, km: 0.1},
+                decoration: {
+                    width: {px: 2, km: 0.05},
+                    color: 'rgba(255, 255, 255, 0.8)',
+                    dash: {px: 6, km: 0.15},
+                },
+            },
+            //Minor Line
+            "1": {
+                lineWidth: {px: 2, km: 0.05},
+                decoration: null,
+            },
+        },
     },
 
 };

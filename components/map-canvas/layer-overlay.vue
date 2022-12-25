@@ -110,7 +110,7 @@ export default {
         <v-group v-if="$store.state.display.show_lat_long_lines">
             <v-group v-for="(long, i) in longitudes" :key="i">
                 <v-line :config="{
-                    ...$config.lat_long_lines,
+                    ...$config.lat_long.line,
                     points: [
                         longitudeLineScreenXs[i], 0,
                         longitudeLineScreenXs[i], screen_height,
@@ -119,9 +119,9 @@ export default {
                 }" />
                 <!-- Upper Label -->
                 <v-text :config="{
-                    ...$config.lat_long_label,
-                    x: longitudeLineScreenXs[i] + ($config.lat_long_label.x_shift || 0),
-                    y: 0 + ($config.lat_long_label.y_shift || 0),
+                    ...$config.lat_long.label,
+                    x: longitudeLineScreenXs[i] + ($config.lat_long.label.x_shift || 0),
+                    y: 0 + ($config.lat_long.label.y_shift || 0),
                     width: screen_width,
                     align: 'left',
                     text: longitudeMark(long),
@@ -129,9 +129,9 @@ export default {
                 }" />
                 <!-- Lower Label -->
                 <v-text :config="{
-                    ...$config.lat_long_label,
-                    x: -screen_width + longitudeLineScreenXs[i] - ($config.lat_long_label.x_shift || 0),
-                    y: screen_height - ($config.lat_long_label.fontSize || 0) - ($config.lat_long_label.y_shift || 0),
+                    ...$config.lat_long.label,
+                    x: -screen_width + longitudeLineScreenXs[i] - ($config.lat_long.label.x_shift || 0),
+                    y: screen_height - ($config.lat_long.label.fontSize || 0) - ($config.lat_long.label.y_shift || 0),
                     width: screen_width,
                     align: 'right',
                     text: longitudeMark(long),
@@ -148,22 +148,22 @@ export default {
                         0, latitudeLineScreenYs[i],
                         screen_width, latitudeLineScreenYs[i],
                     ],
-                    ...$config.lat_long_lines,
+                    ...$config.lat_long.line,
                     listening: false,
                 }" />
                 <v-text :config="{
-                    ...$config.lat_long_label,
-                    x: 0 + ($config.lat_long_label.x_shift || 0),
-                    y: -($config.lat_long_label.fontSize || 0) + latitudeLineScreenYs[i] - ($config.lat_long_label.y_shift || 0),
+                    ...$config.lat_long.label,
+                    x: 0 + ($config.lat_long.label.x_shift || 0),
+                    y: -($config.lat_long.label.fontSize || 0) + latitudeLineScreenYs[i] - ($config.lat_long.label.y_shift || 0),
                     width: screen_width,
                     align: 'left',
                     text: latitudeMark(lat),
                     listening: false,
                 }" />
                 <v-text :config="{
-                    ...$config.lat_long_label,
-                    x: -($config.lat_long_label.x_shift || 0),
-                    y: latitudeLineScreenYs[i] + ($config.lat_long_label.y_shift || 0),
+                    ...$config.lat_long.label,
+                    x: -($config.lat_long.label.x_shift || 0),
+                    y: latitudeLineScreenYs[i] + ($config.lat_long.label.y_shift || 0),
                     width: screen_width,
                     align: 'right',
                     text: latitudeMark(lat),
@@ -179,7 +179,7 @@ export default {
                     (screen_width - $config.scale.x_shift), ($config.scale.y_shift + $config.scale.height),
                     (screen_width - $config.scale.x_shift), ($config.scale.y_shift),
                 ],
-                ...$config.scale_line,
+                ...$config.scale.line,
                 listening: false,
             }" />
             <v-line :config="{
@@ -187,7 +187,7 @@ export default {
                     (screen_width - $config.scale.x_shift), ($config.scale.y_shift + $config.scale.height / 2),
                     (screen_width - $config.scale.x_shift - scaleUsed.width), ($config.scale.y_shift + $config.scale.height / 2),
                 ],
-                ...$config.scale_line,
+                ...$config.scale.line,
                 listening: false,
             }" />
             <v-line :config="{
@@ -195,13 +195,13 @@ export default {
                     (screen_width - $config.scale.x_shift - scaleUsed.width), ($config.scale.y_shift + $config.scale.height),
                     (screen_width - $config.scale.x_shift - scaleUsed.width), ($config.scale.y_shift),
                 ],
-                ...$config.scale_line,
+                ...$config.scale.line,
                 listening: false,
             }" />
             <v-text :config="{
-                ...$config.scale_label,
+                ...$config.scale.label,
                 x: screen_width - $config.scale.x_shift - scaleUsed.width,
-                y: ($config.scale_label.y_shift || 0),
+                y: ($config.scale.label.y_shift || 0),
                 width: scaleUsed.width,
                 align: 'center',
                 text: scaleUsed.label,

@@ -8,6 +8,7 @@ export default {
         screenY: Number,
         screenW: Number,
         screenH: Number,
+        minLogzoom: Number,
     },
 
     data(){
@@ -43,9 +44,12 @@ export default {
 </script>
 
 <template>
-    <v-image :config="{
-        image: image,
-        x: screenX, y: screenY, width: screenW, height: screenH,
-        listening: false,
-    }" v-if="image" />
+    <v-image
+        v-if="image && (minLogzoom === null || $store.state.logzoom >= minLogzoom)"
+        :config="{
+            image: image,
+            x: screenX, y: screenY, width: screenW, height: screenH,
+            listening: false,
+        }"
+    />
 </template>

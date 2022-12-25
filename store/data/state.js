@@ -7,5 +7,7 @@ export default () => ({
     line: [],
     line_section: [],
     station: [],
+    operator_type: [],
+    operator: [],
     
 });

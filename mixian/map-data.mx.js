@@ -1,11 +1,16 @@
 const dataTypes = {
+    'ref_image': 'ref-image',
+    'operator_type': 'operator-type',
+    'operator': 'operator',
     'region_broader': 'region-broader',
     'region': 'region',
-    'ref_image': 'ref-image',
     'line_type': 'line-type',
     'line': 'line',
     'line_section': 'line-section',
     'station': 'station',
+};
+const paramsByType = {
+    'line_section': 'segment',
 };
 
 export default {
@@ -30,7 +35,9 @@ export default {
 
         async getDataOfType(type){
             if (!dataTypes[type]) return false;
-            const response = await this.$GET(`hongon/${dataTypes[type]}`, {}, false);
+            const response = await this.$GET(`hongon/${dataTypes[type]}`, {
+                params: paramsByType[type],
+            }, false);
             this.$store.commit(`data/${type}`, response.data);
             return response;
         },
