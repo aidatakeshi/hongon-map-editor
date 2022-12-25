@@ -68,5 +68,31 @@ export default {
             };
         },
 
+        /**
+         * Check If In View
+         */
+        isInView({x, y, x_min, x_max, y_min, y_max}){
+            const {x_left, x_right, y_bottom, y_top} = this.$store.getters;
+            //Type 1: x, y
+            if (x !== undefined && y !== undefined){
+                if (x === null || y === null) return true;
+                if (x < x_left) return false;
+                if (x > x_right) return false;
+                if (y < y_bottom) return false;
+                if (y > y_top) return false;
+                return true;
+            }
+            //Type 2: x_min, x_max, y_min, y_max
+            else{
+                if (x_min === null || x_max === null) return true;
+                if (y_min === null || y_max === null) return true;
+                if (x_max < x_left) return false;
+                if (x_min > x_right) return false;
+                if (y_max < y_bottom) return false;
+                if (y_min > y_top) return false;
+                return true;
+            }
+        },
+
     },
 }

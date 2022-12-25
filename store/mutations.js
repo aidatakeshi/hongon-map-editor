@@ -59,9 +59,9 @@ export default {
     
     //Screen States
     is_loading: (state) => state.is_loading = true,
-    not_loading: (state) => state.not_loading = false,
+    not_loading: (state) => state.is_loading = false,
     is_dragging: (state) => state.is_dragging = true,
-    not_dragging: (state) => state.not_dragging = false,
+    not_dragging: (state) => state.is_dragging = false,
     info_panel_open: (state) => state.info_panel_open = true,
     info_panel_close: (state) => state.info_panel_open = false,
     info_panel_toggle: (state) => state.info_panel_open = !state.info_panel_open,

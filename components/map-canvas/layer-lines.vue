@@ -42,7 +42,8 @@ export default {
         },
 
         refreshTrigger(){
-            return `${this.$store.state.x}|${this.$store.state.y}|${this.$store.state.logzoom}`;;
+            const {x, y, logzoom, is_dragging} = this.$store.state;
+            return `${x}|${y}|${logzoom}|${is_dragging}`;
         },
     },
 
@@ -57,15 +58,15 @@ export default {
 <template>
     <v-layer ref="layer_lines">
         <!-- For Each Line Type-->
-        <template v-for="line_type in line_types_reversed">
+        <v-group v-for="line_type in line_types_reversed">
             <!-- For Each Line in That Type -->
-            <template v-for="line in linesByType(line_type.id)">
+            <v-group v-for="line in linesByType(line_type.id)">
                 <!-- For Each Line Section in That Line -->
                 <LineSection v-for="line_section in lineSectionsByLine(line.id)" :key="line_section.id"
                     :data="line_section" :data-line="line" :data-line-type="line_type"
                     :editable="editable"
                 />
-            </template>
-        </template>
+            </v-group>
+        </v-group>
     </v-layer>
 </template>

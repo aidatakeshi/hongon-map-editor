@@ -43,34 +43,45 @@ export default {
                     const y = this.getScreenY(segments[0].y);
                     ctx.lineTo(x, y);
                 }
-                for (var j = 1; j < segments.length; j++){
-                    const segment = segments[j];
-                    const segment_prev = segments[j-1];
-                    const x = this.getScreenX(segment.x);
-                    const y = this.getScreenY(segment.y);
-                    //Check if Bezier Curve
-                    var isBezier = true;
-                    if (!isFinite(segment.x2) || !isFinite(segment.y2)) isBezier = false;
-                    if (!isFinite(segment_prev.x1) || !isFinite(segment_prev.y1)) isBezier = false;
-                    //... Bezier Curve
-                    if (isBezier){
-                        const x1 = this.getScreenX(segment_prev.x - (-segment_prev.x1));
-                        const y1 = this.getScreenY(segment_prev.y - (-segment_prev.y1));
-                        const x2 = this.getScreenX(segment.x - (-segment.x2));
-                        const y2 = this.getScreenY(segment.y - (-segment.y2));
-                        ctx.bezierCurveTo(x1, y1, x2, y2, x, y);
+                /*if (this.$store.state.is_dragging){
+                    //If dragging, only show a straight line between stations
+                    const x = this.getScreenX(segments[segments.length - 1].x);
+                    const y = this.getScreenY(segments[segments.length - 1].y);
+                    ctx.lineTo(x, y);
+                }else{*/
+                    for (var j = 1; j < segments.length; j++){
+                        const segment = segments[j];
+                        const segment_prev = segments[j-1];
+                        const x = this.getScreenX(segment.x);
+                        const y = this.getScreenY(segment.y);
+                        //Check if Bezier Curve
+                        var isBezier = true;
+                        if (!isFinite(segment.x2) || !isFinite(segment.y2)) isBezier = false;
+                        if (!isFinite(segment_prev.x1) || !isFinite(segment_prev.y1)) isBezier = false;
+                        //... Bezier Curve
+                        if (isBezier && !this.$store.state.is_dragging){
+                            const x1 = this.getScreenX(segment_prev.x - (-segment_prev.x1));
+                            const y1 = this.getScreenY(segment_prev.y - (-segment_prev.y1));
+                            const x2 = this.getScreenX(segment.x - (-segment.x2));
+                            const y2 = this.getScreenY(segment.y - (-segment.y2));
+                            ctx.bezierCurveTo(x1, y1, x2, y2, x, y);
+                        }
+                        //... Simple Straight Line
+                        else{
+                            ctx.lineTo(x, y);
+                        }
                     }
-                    //... Simple Straight Line
-                    else{
-                        ctx.lineTo(x, y);
-                    }
-                }
+                /*}*/
             }
             ctx.fillStrokeShape(shape);
         },
     },
 
     computed: {
+        isDisplaying(){
+            if (!this.isInView(this.data._data || {})) return false;
+            return true;
+        },
         lineConfig(){
             const map_thickness = this.dataLineType.map_thickness;
             return this.$config.line.byType[map_thickness] || this.$config.line.byType.default;
@@ -135,7 +146,7 @@ export default {
 </script>
 
 <template>
-    <v-group>
+    <v-group v-if="isDisplaying">
         <!-- Displayed Line -->
         <v-shape :config="{
             sceneFunc: lineCtx,
@@ -145,7 +156,7 @@ export default {
             fillEnabled: false,
         }"/>
         <!-- Decoration (Dash) Line -->
-        <v-shape v-if="hasDecoration" :config="{
+        <v-shape v-if="hasDecoration && !this.$store.state.is_dragging" :config="{
             sceneFunc: lineCtx,
             stroke: decorationLineColor,
             strokeWidth: decorationLineWidth,
