@@ -1,4 +1,5 @@
 <script>
+import map_calc_screen_mx from '~/mixian/map-calc-screen.mx.js';
 
 import LineSection from './line-section.vue';
 
@@ -8,6 +9,7 @@ export default {
     },
 
     mixins: [
+        map_calc_screen_mx,
     ],
 
     components: {

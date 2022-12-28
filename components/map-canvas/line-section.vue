@@ -102,9 +102,41 @@ export default {
             return this.$store.state.is_scrolling || this.$store.state.is_dragging;
         },
         isDisplaying(){
+            const hidden = this.$store.state.display.hidden;
+            //Check Whether in View
             if (!this.isInView(this.data._data || {})) return false;
+            //Check Whether Line Section Hidden
+            if (hidden.line_section.includes(this.lineSectionID)) return false;
+            //Check Whether Line Hidden
+            if (hidden.line.includes(this.lineID)) return false;
+            //Check Whether Line Type Hidden
+            if (hidden.line_type.includes(this.lineTypeID)) return false;
+            //Check Whether Operator Hidden
+            if (hidden.operator.includes(this.operatorID)) return false;
+            //Check Whether Operator Type Hidden
+            if (hidden.operator_type.includes(this.operatorTypeID)) return false;
+            //Return True
             return true;
         },
+
+        lineSectionID(){
+            return this.data.id;
+        },
+        lineID(){
+            return this.dataLine.id;
+        },
+        lineTypeID(){
+            return this.dataLine.line_type_id;
+        },
+        operatorID(){
+            return this.data.operator_id;
+        },
+        operatorTypeID(){
+            const operator = this.$store.state.data.operator.filter(operator => operator.id == this.data.operator_id);
+            if (!operator.length) return false;
+            return operator[0].operator_type_id;
+        },
+
         lineConfig(){
             const {map_thickness} = this.dataLineType;
             const {defaultType} = this.$config.line;
@@ -148,6 +180,7 @@ export default {
                     }
             }
         },
+
         hasDecoration(){
             return !!this.lineConfig.decoration;
         },
@@ -174,6 +207,16 @@ export default {
 
 <template>
     <v-group v-if="isDisplaying">
+        <!-- Listening Area -->
+
+
+
+        
+        <!-- Selection Highlighter -->
+
+
+
+
         <!-- Displayed Line -->
         <v-shape :config="{
             sceneFunc: lineCtx,
@@ -181,6 +224,7 @@ export default {
             strokeWidth: lineWidth,
             strokeScaleEnabled: false,
             fillEnabled: false,
+            listening: false,
         }"/>
         <!-- Decoration (Dash) Line -->
         <v-shape v-if="hasDecoration && !isDraggingOrScrolling" :config="{

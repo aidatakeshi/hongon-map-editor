@@ -95,10 +95,11 @@ export default {
 
     show_map_ref_images: (state, value) => state.display.show_map_ref_images = !!value,
     show_lat_long_lines: (state, value) => state.display.show_lat_long_lines = !!value,
-    show_stations: (state, value) => state.display.show_stations = !!value,
-    show_stations_minor: (state, value) => state.display.show_stations_minor = !!value,
-    show_stations_not_in_use: (state, value) => state.display.show_stations_not_in_use = !!value,
-    show_stations_signal_only: (state, value) => state.display.show_stations_signal_only = !!value,
+
+    hide_stations: (state, value) => state.display.hidden.station.all = !!value,
+    hide_stations_minor: (state, value) => state.display.hidden.station.minor = !!value,
+    hide_stations_not_in_use: (state, value) => state.display.hidden.station.not_in_use = !!value,
+    hide_stations_signal_only: (state, value) => state.display.hidden.station.signal_only = !!value,
     lock_stations: (state, value) => state.display.lock_stations = !!value,
 
     map_ref_images_transparency: (state, value) => state.display.map_ref_images_transparency = value,
@@ -114,6 +115,7 @@ export default {
 
     hidden_line_types: (state, value) => state.display.hidden.line_types = Array.isArray(value) ? value : [],
     hidden_lines: (state, value) => state.display.hidden_lines = Array.isArray(value) ? value : [],
+    hidden_line_sections: (state, value) => state.display.hidden_line_sections = Array.isArray(value) ? value : [],
     hidden_operator_types: (state, value) => state.display.hidden_operator_types = Array.isArray(value) ? value : [],
     hidden_operators: (state, value) => state.display.hidden_operators = Array.isArray(value) ? value : [],
 

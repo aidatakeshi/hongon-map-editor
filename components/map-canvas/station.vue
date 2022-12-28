@@ -22,8 +22,6 @@ export default {
     },
 
     async mounted(){
-        console.log({x: this.x, y: this.y, stationRadius: this.stationRadius, stationStrokeWidth: this.stationStrokeWidth,
-        strokeColor: this.strokeColor, fillColor: this.fillColor});
     },
 
     methods: {
@@ -60,6 +58,14 @@ export default {
 
 <template>
     <v-group :config="{x: x, y: y}">
+        <!-- Listening Area -->
+
+
+
+        <!-- Selection Highlighter -->
+        
+
+
         <!-- Station (Circle) -->
         <v-circle v-if="!stationConfig.isDiamond" :config="{
             fill: fillColor,
@@ -82,5 +88,11 @@ export default {
             strokeScaleEnabled: false,
             listening: false,
         }" />
+        <!-- Station Label -->
+
+
+
+
+
     </v-group>
 </template>
