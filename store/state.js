@@ -33,6 +33,14 @@ export default () => ({
         position: null,
     },
 
+    //Hover Tooltip
+    hover_tooltip: {
+        x: null,
+        y: null,
+        type: null,
+        id: null,
+    },
+
     //Display
     display: {
         show_map_ref_images: true,

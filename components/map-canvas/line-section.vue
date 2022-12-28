@@ -26,6 +26,16 @@ export default {
     },
 
     methods: {
+        setHoverTooltip(event){
+            this.$store.commit('hover_tooltip_line_section', {
+                x: event.evt.clientX,
+                y: event.evt.clientY,
+                id: this.data.id,
+            });
+        },
+        clearHoverTooltip(){
+            this.$store.commit('hover_tooltip_clear');
+        },
         lineCtx(ctx, shape){
             ctx.beginPath();
             //For each inter-station
@@ -201,17 +211,33 @@ export default {
             if (!decoration) return null;
             return decoration.color;
         },
+
+        hitLineWidth(){
+            const {px_per_km} = this.$store.getters;
+            const widthObj = this.$config.line.hit_area.lineWidth;
+            if (!widthObj) return null;
+            return Math.max(widthObj.px, widthObj.km * px_per_km);
+        },
     },
 }
 </script>
 
 <template>
-    <v-group v-if="isDisplaying">
+    <v-group v-if="isDisplaying"
+        @mouseenter="setHoverTooltip"
+        @mouseleave="clearHoverTooltip"
+    >
+
         <!-- Listening Area -->
+        <v-shape :config="{
+            sceneFunc: lineCtx,
+            stroke: 'black',
+            opacity: 0,
+            strokeWidth: hitLineWidth,
+            strokeScaleEnabled: false,
+            fillEnabled: false,
+        }"/>
 
-
-
-        
         <!-- Selection Highlighter -->
 
 
@@ -226,6 +252,7 @@ export default {
             fillEnabled: false,
             listening: false,
         }"/>
+
         <!-- Decoration (Dash) Line -->
         <v-shape v-if="hasDecoration && !isDraggingOrScrolling" :config="{
             sceneFunc: lineCtx,
@@ -236,5 +263,6 @@ export default {
             fillEnabled: false,
             listening: false,
         }"/>
+
     </v-group>
 </template>

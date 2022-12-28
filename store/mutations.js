@@ -84,6 +84,23 @@ export default {
     selected_segment: (state, value) => state.selected.segment = value,
     selected_position: (state, value) => state.selected.position = value,
 
+    //Hover Tooltip
+    hover_tooltip_line_section(state, {x, y, id}){
+        state.hover_tooltip = {
+            x, y, id, type: 'line_section',
+        }
+    },
+    hover_tooltip_station(state, {x, y, id}){
+        state.hover_tooltip = {
+            x, y, id, type: 'station',
+        }
+    },
+    hover_tooltip_clear(state){
+        state.hover_tooltip = {
+            x: null, y: null, id: null, type: null,
+        }
+    },
+
     //Display
     display(state, value){
         for (let key in value){

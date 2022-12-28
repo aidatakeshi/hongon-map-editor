@@ -9,6 +9,8 @@ import LayerLines from './map-canvas/layer-lines.vue';
 import LayerStations from './map-canvas/layer-stations.vue';
 import LayerOverlay from './map-canvas/layer-overlay.vue';
 
+import MapHoverTooltip from './map-hover-tooltip.vue';
+
 export default {
     props: {
         editable: { type: Boolean, default: false },
@@ -22,6 +24,7 @@ export default {
         LayerBaseImage, LayerRefImages,
         LayerLines, LayerStations,
         LayerOverlay,
+        MapHoverTooltip,
     },
 
     async mounted(){
@@ -47,13 +50,17 @@ export default {
                 height: this.$store.state.screen_height,
             };
         },
+        cursor(){
+            if (this.$store.state.hover_tooltip.type) return 'pointer';
+            return 'default';
+        },
     },
 
 }
 </script>
 
 <template>
-    <div class="map-wrapper">
+    <div class="map-wrapper" :style="{cursor: cursor}">
 
         <!-- Canvas ------------------------------------------------------------------------------>
         <v-stage :config="stageConfig" @wheel="handleWheelRoll">
@@ -68,6 +75,9 @@ export default {
             <!-- Lat/Long Lines, Scale -->
             <LayerOverlay :editable="editable" />
         </v-stage>
+
+        <!-- Hover Tooltip -->
+        <MapHoverTooltip />
 
         <!-- Panel ------------------------------------------------------------------------------->
         <div style="position: absolute; left: 0; top: 0; background-color: white;">

@@ -70,20 +70,41 @@ export default {
             size: {px: 8, km: 0.32},
             strokeWidth: {px: 2, km: 0.08},
             hideBelowLogzoom: 0.6,
-            hideLabelBelowLogzoom: 0.8,
+            label: {
+                fontStyle: 'bold',
+                fontSize: 12,
+                width: 50,
+                y_shift: 3,
+                hideBelowLogzoom: 0.8,
+            },
         },
         minor: {
             size: {px: 6, km: 0.24},
             strokeWidth: {px: 1.5, km: 0.06},
-            hideBelowLogzoom: 1,
-            hideLabelBelowLogzoom: 1.2,
+            hideBelowLogzoom: 1.2,
+            label: {
+                fontStyle: 'bold',
+                fontSize: 10,
+                width: 42,
+                y_shift: 3,
+                hideBelowLogzoom: 1.4,
+            },
         },
         signal: {
             isDiamond: true,
             size: {px: 5, km: 0.2},
             strokeWidth: {px: 1.5, km: 0.06},
-            hideBelowLogzoom: 1,
-            hideLabelBelowLogzoom: 1.2,
+            hideBelowLogzoom: 1.2,
+            label: {
+                fontStyle: 'bold',
+                fontSize: 10,
+                width: 42,
+                y_shift: 3,
+                hideBelowLogzoom: 1.4,
+            },
+        },
+        hit_area: {
+            size: {px: 12, km: 0.48},
         },
         in_use: {
             stroke: 'black',
@@ -140,6 +161,9 @@ export default {
                 hideBezier: 1.0, //Below this logzoom
                 hideBezierMoving: true,
             },
+        },
+        hit_area: {
+            lineWidth: {px: 6, km: 0.2},
         },
     },
 

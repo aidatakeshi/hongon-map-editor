@@ -14,7 +14,18 @@ export default {
         const value = localStorage.getItem('display');
         try{
             const value_parsed = JSON.parse(value);
-            commit('display', value_parsed);
+            let display = {};
+            for (let attr in state.display){
+                display[attr] = (value_parsed[attr] !== undefined)
+                ? value_parsed[attr] : state.display[attr];
+            }
+            //display.hidden
+            display.hidden = {};
+            for (let attr in state.display.hidden){
+                display.hidden[attr] = (value_parsed.hidden[attr] !== undefined)
+                ? value_parsed.hidden[attr] : state.display.hidden[attr];
+            }
+            commit('display', display);
         }catch(error){}
     },
 
