@@ -4,9 +4,9 @@ import map_calc_screen_mx from '~/mixian/map-calc-screen.mx.js';
 export default {
     props: {
         editable: { type: Boolean, default: false },
-        data: {type: Object, default: ()=>{}},
-        dataLine: {type: Object, default: ()=>{}},
-        dataLineType: {type: Object, default: ()=>{}},
+        data: { type: Object, default: ()=>{} },
+        dataLine: { type: Object, default: ()=>{} },
+        dataLineType: { type: Object, default: ()=>{} },
     },
 
     mixins: [

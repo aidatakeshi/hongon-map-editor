@@ -64,6 +64,37 @@ export default {
         },
     },
 
+    //Station
+    station: {
+        major: {
+            size: {px: 8, km: 0.32},
+            strokeWidth: {px: 2, km: 0.08},
+            hideBelowLogzoom: 0.6,
+            hideLabelBelowLogzoom: 0.8,
+        },
+        minor: {
+            size: {px: 6, km: 0.24},
+            strokeWidth: {px: 1.5, km: 0.06},
+            hideBelowLogzoom: 1,
+            hideLabelBelowLogzoom: 1.2,
+        },
+        signal: {
+            isDiamond: true,
+            size: {px: 5, km: 0.2},
+            strokeWidth: {px: 1.5, km: 0.06},
+            hideBelowLogzoom: 1,
+            hideLabelBelowLogzoom: 1.2,
+        },
+        in_use: {
+            stroke: 'black',
+            fill: 'white',
+        },
+        not_in_use: {
+            stroke: '#666',
+            fill: '#ccc',
+        },
+    },
+
     //Line
     line: {
         defaultType: "2",
@@ -71,13 +102,13 @@ export default {
             //Major Line
             "3": {
                 name: "Major",
-                defaultDisplayLineColor: true,
                 lineWidth: {px: 6, km: 0.2},
                 decoration: {
                     width: {px: 3, km: 0.1},
                     color: 'rgba(255, 255, 255, 0.8)',
                     dash: {px: 9, km: 0.3},
                 },
+                defaultDisplayLineColor: true,
                 hideSegments: false,
                 hideSegmentsMoving: false,
                 hideBezier: false,
@@ -86,13 +117,13 @@ export default {
             //Default Line
             "2": {
                 name: "Default",
-                defaultDisplayLineColor: false,
                 lineWidth: {px: 4, km: 0.1},
                 decoration: {
                     width: {px: 2, km: 0.05},
                     color: 'rgba(255, 255, 255, 0.8)',
                     dash: {px: 6, km: 0.15},
                 },
+                defaultDisplayLineColor: false,
                 hideSegments: false,
                 hideSegmentsMoving: true,
                 hideBezier: 0.7, //Below this logzoom
@@ -101,9 +132,9 @@ export default {
             //Minor Line
             "1": {
                 name: "Minor",
-                defaultDisplayLineColor: false,
                 lineWidth: {px: 2, km: 0.05},
                 decoration: null,
+                defaultDisplayLineColor: false,
                 hideSegments: false,
                 hideSegmentsMoving: true,
                 hideBezier: 1.0, //Below this logzoom

@@ -57,7 +57,7 @@ export default {
 
 <template>
     <v-layer ref="layer_lines">
-        <!-- For Each Line Type-->
+        <!-- For Each Line Type -->
         <v-group v-for="line_type in line_types_reversed">
             <!-- For Each Line in That Type -->
             <v-group v-for="line in linesByType(line_type.id)">
