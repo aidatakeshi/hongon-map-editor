@@ -28,63 +28,87 @@ export default {
     methods: {
         lineCtx(ctx, shape){
             ctx.beginPath();
-            let firstStation = true;
             //For each inter-station
             for (let i in this.data.stations){
-                var segments = this.data.stations[i].segments;
+                const interstation = this.data.stations[i];
+                const segments = interstation.segments;
+                //If no segments available, skip.
                 if (!segments.length) continue;
-                if (firstStation){
-                    firstStation = false;
-                    const x = this.getScreenX(segments[0].x);
-                    const y = this.getScreenY(segments[0].y);
+                //First point of inter-station
+                const x = this.getScreenX(segments[0].x);
+                const y = this.getScreenY(segments[0].y);
+                if (i == 0){
                     ctx.moveTo(x, y);
                 }else{
-                    const x = this.getScreenX(segments[0].x);
-                    const y = this.getScreenY(segments[0].y);
                     ctx.lineTo(x, y);
                 }
-                /*if (this.$store.state.is_dragging){
-                    //If dragging, only show a straight line between stations
+                //Determine if Hide Segments / Bezier
+                const {is_dragging, is_scrolling, logzoom} = this.$store.state;
+                const isMoving = is_dragging || is_scrolling;
+                const {hideSegments, hideSegmentsMoving, hideBezier, hideBezierMoving} = this.lineConfig;
+                const minLogzoomForSegments = isMoving ? hideSegmentsMoving : hideSegments;
+                const minLogzoomForBezier = isMoving ? hideBezierMoving : hideBezier;
+                const isHideSegments = [null, 0, undefined].includes(minLogzoomForSegments) ? false
+                    : minLogzoomForSegments === true ? true
+                    : logzoom < minLogzoomForSegments;
+                const isHideBezier = [null, 0, undefined].includes(minLogzoomForBezier) ? false
+                    : minLogzoomForBezier === true ? true
+                    : logzoom < minLogzoomForBezier;
+                //Check if interstation out of view
+                const isInView = this.isInView(interstation._data);
+                //Case 1: Jump to the next station without drawing
+                if (!isInView){
+                    const x = this.getScreenX(segments[segments.length - 1].x);
+                    const y = this.getScreenY(segments[segments.length - 1].y);
+                    ctx.moveTo(x, y);
+                }
+                //Case 2: Only show a straight line between stations
+                else if (isHideSegments){
                     const x = this.getScreenX(segments[segments.length - 1].x);
                     const y = this.getScreenY(segments[segments.length - 1].y);
                     ctx.lineTo(x, y);
-                }else{*/
+                }
+                //Case 3: Draw each segment between stations
+                else{
                     for (var j = 1; j < segments.length; j++){
                         const segment = segments[j];
                         const segment_prev = segments[j-1];
                         const x = this.getScreenX(segment.x);
                         const y = this.getScreenY(segment.y);
                         //Check if Bezier Curve
-                        var isBezier = true;
-                        if (!isFinite(segment.x2) || !isFinite(segment.y2)) isBezier = false;
-                        if (!isFinite(segment_prev.x1) || !isFinite(segment_prev.y1)) isBezier = false;
-                        //... Bezier Curve
-                        if (isBezier && !this.$store.state.is_dragging){
-                            const x1 = this.getScreenX(segment_prev.x - (-segment_prev.x1));
-                            const y1 = this.getScreenY(segment_prev.y - (-segment_prev.y1));
-                            const x2 = this.getScreenX(segment.x - (-segment.x2));
-                            const y2 = this.getScreenY(segment.y - (-segment.y2));
+                        const isBezier = isFinite(segment.x2) && isFinite(segment.y2)
+                        && isFinite(segment_prev.x1) && isFinite(segment_prev.y1);
+                        //Case 3A: Show Bezier Curve
+                        if (isBezier && !isHideBezier){
+                            const x1 = this.getScreenX(segment_prev.x + segment_prev.x1);
+                            const y1 = this.getScreenY(segment_prev.y + segment_prev.y1);
+                            const x2 = this.getScreenX(segment.x + segment.x2);
+                            const y2 = this.getScreenY(segment.y + segment.y2);
                             ctx.bezierCurveTo(x1, y1, x2, y2, x, y);
                         }
-                        //... Simple Straight Line
+                        //Case 3B: Show Simple Straight Line
                         else{
                             ctx.lineTo(x, y);
                         }
                     }
-                /*}*/
+                }
             }
             ctx.fillStrokeShape(shape);
         },
     },
 
     computed: {
+        isDraggingOrScrolling(){
+            return this.$store.state.is_scrolling || this.$store.state.is_dragging;
+        },
         isDisplaying(){
             if (!this.isInView(this.data._data || {})) return false;
             return true;
         },
         lineConfig(){
-            const map_thickness = this.dataLineType.map_thickness;
-            return this.$config.line.byType[map_thickness] || this.$config.line.byType.default;
+            const {map_thickness} = this.dataLineType;
+            const {defaultType} = this.$config.line;
+            return this.$config.line.byType[map_thickness || defaultType];
         },
         lineWidth(){
             const {px_per_km} = this.$store.getters;
@@ -117,8 +141,11 @@ export default {
                         return operator.color || 'black';
                     }
                 default:
-                    if (this.dataLineType.map_thickness >= 3) return this.data.color;
-                    return this.dataLineType.map_color;
+                    if (this.lineConfig.defaultDisplayLineColor){
+                        return this.data.color;
+                    }else{
+                        return this.dataLineType.map_color;
+                    }
             }
         },
         hasDecoration(){
@@ -156,7 +183,7 @@ export default {
             fillEnabled: false,
         }"/>
         <!-- Decoration (Dash) Line -->
-        <v-shape v-if="hasDecoration && !this.$store.state.is_dragging" :config="{
+        <v-shape v-if="hasDecoration && !isDraggingOrScrolling" :config="{
             sceneFunc: lineCtx,
             stroke: decorationLineColor,
             strokeWidth: decorationLineWidth,

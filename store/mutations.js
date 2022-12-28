@@ -62,6 +62,8 @@ export default {
     not_loading: (state) => state.is_loading = false,
     is_dragging: (state) => state.is_dragging = true,
     not_dragging: (state) => state.is_dragging = false,
+    is_scrolling: (state) => state.is_scrolling = true,
+    not_scrolling: (state) => state.is_scrolling = false,
     info_panel_open: (state) => state.info_panel_open = true,
     info_panel_close: (state) => state.info_panel_open = false,
     info_panel_toggle: (state) => state.info_panel_open = !state.info_panel_open,

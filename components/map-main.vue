@@ -71,7 +71,7 @@ export default {
 
         <!-- Panel ------------------------------------------------------------------------------->
         <div style="position: absolute; left: 0; top: 0; background-color: white;">
-            DUMMY
+            {{$store.state.logzoom}}
         </div>
 
         <!-- Menu -------------------------------------------------------------------------------->

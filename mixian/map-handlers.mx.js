@@ -30,6 +30,7 @@ export default {
     
         handleWheelRoll(e){
             e.evt.preventDefault();
+            this.$store.commit('is_scrolling');
             //Change logzoom value
             const scroll_step = this.$config.zoom.logzoom_step_scroll * (e.evt.deltaY < 0 ? +1 : -1);
             this.$store.commit('logzoom_step', scroll_step);
@@ -40,6 +41,7 @@ export default {
                 clearTimeout(this.save_ls_after_scroll_timer);
             }
             this.save_ls_after_scroll_timer = setTimeout(function(){
+                this.$store.commit('not_scrolling');
                 //Log Console
                 const {logzoom} = this.$store.state;
                 console.log(`%c Scrolled: logzoom = ${logzoom}`, 'color: yellow;');

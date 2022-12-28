@@ -20,6 +20,7 @@ export default () => ({
     //Screen States
     is_loading: false,
     is_dragging: false,
+    is_scrolling: false,
     info_panel_open: false,
 
     //Selection

@@ -28,7 +28,7 @@ export default {
         logzoom_step_scroll: 0.1,
         logzoom_step_button: 0.2,
         logzoom_step_unit: 0.1,
-        save_ls_after_scroll: 1000, //In ms
+        save_ls_after_scroll: 500, //In ms
     },
 
     //Lat / Long Lines
@@ -66,29 +66,48 @@ export default {
 
     //Line
     line: {
+        defaultType: "2",
         byType: {
             //Major Line
             "3": {
+                name: "Major",
+                defaultDisplayLineColor: true,
                 lineWidth: {px: 6, km: 0.2},
                 decoration: {
                     width: {px: 3, km: 0.1},
                     color: 'rgba(255, 255, 255, 0.8)',
                     dash: {px: 9, km: 0.3},
                 },
+                hideSegments: false,
+                hideSegmentsMoving: false,
+                hideBezier: false,
+                hideBezierMoving: true,
             },
             //Default Line
-            "default": {
+            "2": {
+                name: "Default",
+                defaultDisplayLineColor: false,
                 lineWidth: {px: 4, km: 0.1},
                 decoration: {
                     width: {px: 2, km: 0.05},
                     color: 'rgba(255, 255, 255, 0.8)',
                     dash: {px: 6, km: 0.15},
                 },
+                hideSegments: false,
+                hideSegmentsMoving: true,
+                hideBezier: 0.7, //Below this logzoom
+                hideBezierMoving: true,
             },
             //Minor Line
             "1": {
+                name: "Minor",
+                defaultDisplayLineColor: false,
                 lineWidth: {px: 2, km: 0.05},
                 decoration: null,
+                hideSegments: false,
+                hideSegmentsMoving: true,
+                hideBezier: 1.0, //Below this logzoom
+                hideBezierMoving: true,
             },
         },
     },
