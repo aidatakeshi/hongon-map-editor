@@ -30,6 +30,14 @@ export default {
         clearHoverTooltip(){
             this.$store.commit('hover_tooltip_station', null);
         },
+        handleClicked(){
+            //In edit mode, if another item is already selected, omit it.
+            if (this.$store.state.is_editable){
+                if (this.$store.state.selected_type) return false;
+            }
+            //Set selection
+            this.$store.commit('selected_station', this.data.id);
+        },
     },
 
     computed: {
@@ -60,6 +68,13 @@ export default {
             return (this.data.is_in_use ? in_use : not_in_use).fill;
         },
 
+        highlighterExtraStrokeWidth(){
+            const {px_per_km} = this.$store.getters;
+            const strokeWidthObj = this.$config.station.highlighter.extraStrokeWidth;
+            if (!strokeWidthObj) return null;
+            return Math.max(strokeWidthObj.px, strokeWidthObj.km * px_per_km);
+        },
+
         hitAreaSize(){
             const {px_per_km} = this.$store.getters;
             const sizeObj = this.$config.station.hit_area.size;
@@ -86,6 +101,12 @@ export default {
             //Return False
             return false;
         },
+
+        isSelected(){
+            if (this.$store.state.selected_type !== 'station') return false;
+            if (this.$store.state.selected_id !== this.data.id) return false;
+            return true;
+        },
     },
 }
 </script>
@@ -94,6 +115,7 @@ export default {
     <v-group :config="{x: x, y: y}"
         @mouseenter="setHoverTooltip"
         @mouseleave="clearHoverTooltip"
+        @mouseup="handleClicked" @touchend="handleClicked"
     >
         <!-- Listening Area -->
         <v-circle :config="{
@@ -102,10 +124,6 @@ export default {
             radius: hitAreaSize / 2,
             strokeScaleEnabled: false,
         }" />
-
-        <!-- Selection Highlighter -->
-        
-
 
         <!-- Station (Circle) -->
         <v-circle v-if="!stationConfig.isDiamond" :config="{
@@ -130,6 +148,30 @@ export default {
             strokeScaleEnabled: false,
             listening: false,
         }" />
+
+        <v-group v-if="isSelected">
+            <!-- Selection Highlighter (Circle) -->
+            <v-circle v-if="!stationConfig.isDiamond" :config="{
+                ...$config.station.highlighter,
+                radius: stationSize / 2,
+                strokeWidth: stationStrokeWidth + highlighterExtraStrokeWidth * 2,
+                strokeScaleEnabled: false,
+                listening: false,
+            }" />
+
+            <!-- Selection Highlighter (Diamond) -->
+            <v-rect v-else :config="{
+                ...$config.station.highlighter,
+                width: stationSize,
+                height: stationSize,
+                offsetX: stationSize / 2,
+                offsetY: stationSize / 2,
+                rotation: 45,
+                strokeWidth: stationStrokeWidth + highlighterExtraStrokeWidth * 2,
+                strokeScaleEnabled: false,
+                listening: false,
+            }" />
+        </v-group>
 
         <!-- Station Label -->
         <v-text v-if="!hideLabel" :config="{

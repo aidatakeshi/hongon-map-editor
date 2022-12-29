@@ -27,14 +27,8 @@ export default () => ({
     info_panel_open: false,
 
     //Selection
-    selected: {
-        type: null,
-        id: null,
-        part: null,
-        interstation: null,
-        segment: null,
-        position: null,
-    },
+    selected_type: null,
+    selected_id: null,
 
     //Hover Tooltip
     hover_tooltip_line_section: null,

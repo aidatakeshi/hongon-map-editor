@@ -68,20 +68,18 @@ export default {
     info_panel_toggle: (state) => state.info_panel_open = !state.info_panel_open,
 
     //Selection
-    selected(state, value){
-        for (let key in value){
-            if (state.selected[key] !== undefined){
-                state.selected[key] = value[key];
-            }
-        }
+    selected_line_section(state, id){
+        state.selected_type = 'line_section';
+        state.selected_id = id;
     },
-
-    selected_type: (state, value) => state.selected.type = value,
-    selected_id: (state, value) => state.selected.id = value,
-    selected_part: (state, value) => state.selected.part = value,
-    selected_interstation: (state, value) => state.selected.interstation = value,
-    selected_segment: (state, value) => state.selected.segment = value,
-    selected_position: (state, value) => state.selected.position = value,
+    selected_station(state, id){
+        state.selected_type = 'station';
+        state.selected_id = id;
+    },
+    selected_clear(state){
+        state.selected_type = null;
+        state.selected_id = null;
+    },
 
     //Hover Tooltip
     hover_tooltip_line_section(state, id = null){

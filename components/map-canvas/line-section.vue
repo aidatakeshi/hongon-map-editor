@@ -31,6 +31,15 @@ export default {
         clearHoverTooltip(){
             this.$store.commit('hover_tooltip_line_section', null);
         },
+        handleClicked(){
+            //In edit mode, if another item is already selected, omit it.
+            if (this.$store.state.is_editable){
+                if (this.$store.state.selected_type) return false;
+            }
+            //Set selection
+            this.$store.commit('selected_line_section', this.data.id);
+        },
+
         lineCtx(ctx, shape){
             ctx.beginPath();
             //For each inter-station
@@ -186,6 +195,13 @@ export default {
             }
         },
 
+        highlighterExtraLineWidth(){
+            const {px_per_km} = this.$store.getters;
+            const strokeWidthObj = this.$config.line.highlighter.extraLineWidth;
+            if (!strokeWidthObj) return null;
+            return Math.max(strokeWidthObj.px, strokeWidthObj.km * px_per_km);
+        },
+
         hasDecoration(){
             return !!this.lineConfig.decoration;
         },
@@ -213,6 +229,12 @@ export default {
             if (!widthObj) return null;
             return Math.max(widthObj.px, widthObj.km * px_per_km);
         },
+
+        isSelected(){
+            if (this.$store.state.selected_type !== 'line_section') return false;
+            if (this.$store.state.selected_id !== this.data.id) return false;
+            return true;
+        },
     },
 }
 </script>
@@ -221,6 +243,7 @@ export default {
     <v-group v-if="isDisplaying"
         @mouseenter="setHoverTooltip"
         @mouseleave="clearHoverTooltip"
+        @mouseup="handleClicked" @touchend="handleClicked"
     >
 
         <!-- Listening Area -->
@@ -234,9 +257,14 @@ export default {
         }"/>
 
         <!-- Selection Highlighter -->
-
-
-
+        <v-shape v-if="isSelected" :config="{
+            ...$config.line.highlighter,
+            sceneFunc: lineCtx,
+            strokeWidth: lineWidth + highlighterExtraLineWidth * 2,
+            strokeScaleEnabled: false,
+            fillEnabled: false,
+            listening: false,
+        }"/>
 
         <!-- Displayed Line -->
         <v-shape :config="{

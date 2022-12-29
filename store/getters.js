@@ -28,8 +28,4 @@ export default {
 
     is_moving: (state, getters) => state.is_dragging || state.is_scrolling,
 
-    //Selection
-    is_station_selected: (state) => state.selected.type === 'station',
-    is_line_selected: (state) => state.selected.type === 'line',
-
 };

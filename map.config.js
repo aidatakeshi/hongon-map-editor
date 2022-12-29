@@ -114,6 +114,12 @@ export default {
             stroke: '#666',
             fill: '#ccc',
         },
+        highlighter: {
+            extraStrokeWidth: {px: 5, km: 0.2},
+            stroke: 'yellow',
+            fill: 'yellow',
+            opacity: 0.5,
+        },
     },
 
     //Line
@@ -164,6 +170,12 @@ export default {
         },
         hit_area: {
             lineWidth: {px: 6, km: 0.2},
+        },
+        highlighter: {
+            extraLineWidth: {px: 3, km: 0.2},
+            stroke: 'yellow',
+            fill: 'yellow',
+            opacity: 0.5,
         },
     },
 
