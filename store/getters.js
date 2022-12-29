@@ -22,6 +22,8 @@ export default {
 
     logzoom_min: (state, getters) => Math.log10(state.screen_height / (config.map.latitude_min + config.map.latitude_max)),
 
+    is_moving: (state, getters) => state.is_dragging || state.is_scrolling,
+
     //Selection
     is_station_selected: (state) => state.selected.type === 'station',
     is_line_selected: (state) => state.selected.type === 'line',

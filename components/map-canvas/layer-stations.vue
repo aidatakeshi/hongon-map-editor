@@ -26,19 +26,27 @@ export default {
     },
 
     methods: {
-        isDisplayStation(station){
+
+        isDisplayStationGroup(isMajor){
             //Check Hidden Stations
-            const hidden_station = this.$store.state.display.hidden.station;
-            if (hidden_station.all){
+            const {hidden} = this.$store.state.display;
+            if (hidden.station){
                 return false;
             }
-            if (hidden_station.minor){
-                if (!station.is_major) return false;
+            if (hidden.station_minor){
+                if (!isMajor) return false;
             }
-            if (hidden_station.signal_only){
+            //Return True
+            return true;
+        },
+
+        isDisplayStation(station){
+            //Check Hidden Stations
+            const {hidden} = this.$store.state.display;
+            if (hidden.station_signal_only){
                 if (station.is_signal_only) return false;
             }
-            if (hidden_station.not_in_use){
+            if (hidden.station_not_in_use){
                 if (!station.is_in_use) return false;
             }
             //Check Whether in View
@@ -58,19 +66,37 @@ export default {
             //Return True
             return true;
         },
+
     },
 
     computed: {
+        majorStations(){
+            return this.$store.state.data.station.filter(item => item.is_major);
+        },
+        minorStations(){
+            return this.$store.state.data.station.filter(item => !item.is_major);
+        },
     },
 }
 </script>
 
 <template>
     <v-layer ref="layer_stations">
-        <Station v-for="station in $store.state.data.station" :key="station.id"
-            v-if="isDisplayStation(station)"
-            :data="station" :editable="editable"
-            :x="getScreenX(station.x)" :y="getScreenY(station.y)"
-        />
+        <!-- Minor Stations -->
+        <v-group v-if="isDisplayStationGroup(false)">
+            <Station v-for="station in minorStations" :key="station.id"
+                v-if="isDisplayStation(station)"
+                :data="station" :editable="editable"
+                :x="getScreenX(station.x)" :y="getScreenY(station.y)"
+            />
+        </v-group>
+        <!-- Major Stations -->
+        <v-group v-if="isDisplayStationGroup(true)">
+            <Station v-for="station in majorStations" :key="station.id"
+                v-if="isDisplayStation(station)"
+                :data="station" :editable="editable"
+                :x="getScreenX(station.x)" :y="getScreenY(station.y)"
+            />
+        </v-group>
     </v-layer>
 </template>

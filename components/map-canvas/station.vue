@@ -26,21 +26,19 @@ export default {
 
     methods: {
         setHoverTooltip(){
-            this.$store.commit('hover_tooltip_station', {
-                x: this.x,
-                y: this.y,
-                id: this.data.id,
-            });
+            this.$store.commit('hover_tooltip_station', this.data.id);
         },
         clearHoverTooltip(){
-            this.$store.commit('hover_tooltip_clear');
+            this.$store.commit('hover_tooltip_station', null);
         },
     },
 
     computed: {
         stationConfig(){
             const {major, minor, signal} = this.$config.station;
-            return this.data.is_signal_only ? signal : this.data.is_major ? major : minor;
+            if (this.data.is_signal_only) return signal;
+            if (this.data.is_major) return major;
+            return minor;
         },
         stationSize(){
             const {px_per_km} = this.$store.getters;
@@ -74,10 +72,20 @@ export default {
             return this.stationConfig.label || {};
         },
         hideLabel(){
+            //Check if Label Hidden
+            const {hidden} = this.$store.state.display;
+            if (hidden.station_label) return true;
+            if (hidden.station_label_minor){
+                if (!this.data.is_major) return true;
+            }
+            //Check if Below Logzoom
             const {logzoom} = this.$store.state;
             const {hideBelowLogzoom} = this.labelConfig;
-            if ([null, undefined, false].includes(hideBelowLogzoom)) return false;
-            return logzoom < hideBelowLogzoom;
+            if (![null, undefined, false].includes(hideBelowLogzoom)){
+                if (logzoom < hideBelowLogzoom) return true;
+            }
+            //Return False
+            return false;
         },
     },
 }
@@ -90,7 +98,7 @@ export default {
     >
         <!-- Listening Area -->
         <v-circle :config="{
-            stroke: 'black',
+            fill: 'red',
             opacity: 0,
             radius: hitAreaSize / 2,
             strokeScaleEnabled: false,
@@ -128,7 +136,7 @@ export default {
         <v-text v-if="!hideLabel" :config="{
             ...labelConfig,
             x: -labelConfig.width / 2,
-            y: stationSize / 2 + labelConfig.y_shift,
+            y: stationSize / 2 + stationStrokeWidth / 2 + labelConfig.y_shift,
             align: 'center',
             text: data.name_chi,
             listening: false,

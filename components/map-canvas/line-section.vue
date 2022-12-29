@@ -27,14 +27,10 @@ export default {
 
     methods: {
         setHoverTooltip(event){
-            this.$store.commit('hover_tooltip_line_section', {
-                x: event.evt.clientX,
-                y: event.evt.clientY,
-                id: this.data.id,
-            });
+            this.$store.commit('hover_tooltip_line_section', this.data.id);
         },
         clearHoverTooltip(){
-            this.$store.commit('hover_tooltip_clear');
+            this.$store.commit('hover_tooltip_line_section', null);
         },
         lineCtx(ctx, shape){
             ctx.beginPath();
@@ -231,7 +227,7 @@ export default {
         <!-- Listening Area -->
         <v-shape :config="{
             sceneFunc: lineCtx,
-            stroke: 'black',
+            stroke: 'red',
             opacity: 0,
             strokeWidth: hitLineWidth,
             strokeScaleEnabled: false,

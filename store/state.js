@@ -9,9 +9,9 @@ export default () => ({
     y: (config.map.latitude_min + config.map.latitude_max) / 2,
     logzoom: config.zoom.logzoom_default,
 
-    //Cursor
-    cursor_x: null,
-    cursor_y: null,
+    //Pointer
+    pointer_x: null,
+    pointer_y: null,
 
     //Dragging / Touching
     touch_initial_dist: null,
@@ -34,12 +34,8 @@ export default () => ({
     },
 
     //Hover Tooltip
-    hover_tooltip: {
-        x: null,
-        y: null,
-        type: null,
-        id: null,
-    },
+    hover_tooltip_line_section: null,
+    hover_tooltip_station: null,
 
     //Display
     display: {
@@ -49,12 +45,12 @@ export default () => ({
         lock_stations: false,
         line_color: "default",
         hidden: {
-            station: {
-                all: false,
-                minor: false,
-                not_in_use: false,
-                signal_only: false,
-            },
+            station: false,
+            station_minor: false,
+            station_not_in_use: false,
+            station_signal_only: false,
+            station_label: false,
+            station_label_minor: false,
             line_type: [],
             line: [],
             line_section: [],

@@ -51,7 +51,10 @@ export default {
             };
         },
         cursor(){
-            if (this.$store.state.hover_tooltip.type) return 'pointer';
+            if (this.$store.state.is_loading) return 'wait';
+            if (this.$store.state.is_dragging) return 'move';
+            if (this.$store.state.hover_tooltip_line_section) return 'pointer';
+            if (this.$store.state.hover_tooltip_station) return 'pointer';
             return 'default';
         },
     },

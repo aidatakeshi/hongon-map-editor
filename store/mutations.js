@@ -3,12 +3,6 @@ import config from '~/map.config.js';
 export default {
 
     //Screen Display
-    screen_width(state){
-        state.screen_width = window ? window.innerWidth : null;
-    },
-    screen_height(state){
-        state.screen_height = window ? window.innerHeight : null;
-    },
     screen_size(state){
         state.screen_width = window ? window.innerWidth : null;
         state.screen_height = window ? window.innerHeight : null;
@@ -34,19 +28,21 @@ export default {
             state.logzoom = Math.round((state.logzoom + value) / logzoom_step_unit) * logzoom_step_unit;
         }
     },
-    cursor_x(state, value){
-        if (Number.isFinite(value)) state.cursor_x = value;
+
+    //Pointer
+    pointer_x(state, value){
+        if (Number.isFinite(value)) state.pointer_x = value;
     },
-    cursor_y(state, value){
-        if (Number.isFinite(value)) state.cursor_y = value;
+    pointer_y(state, value){
+        if (Number.isFinite(value)) state.pointer_y = value;
     },
-    set_cursor(state, {x, y}){
-        if (Number.isFinite(x)) state.cursor_x = x;
-        if (Number.isFinite(y)) state.cursor_y = y;
+    set_pointer(state, {x, y}){
+        if (Number.isFinite(x)) state.pointer_x = x;
+        if (Number.isFinite(y)) state.pointer_y = y;
     },
-    clear_cursor(state){
-        state.cursor_x = null;
-        state.cursor_y = null;
+    clear_pointer(state){
+        state.pointer_x = null;
+        state.pointer_y = null;
     },
 
     //Dragging / Touching
@@ -85,20 +81,11 @@ export default {
     selected_position: (state, value) => state.selected.position = value,
 
     //Hover Tooltip
-    hover_tooltip_line_section(state, {x, y, id}){
-        state.hover_tooltip = {
-            x, y, id, type: 'line_section',
-        }
+    hover_tooltip_line_section(state, id = null){
+        state.hover_tooltip_line_section = id;
     },
-    hover_tooltip_station(state, {x, y, id}){
-        state.hover_tooltip = {
-            x, y, id, type: 'station',
-        }
-    },
-    hover_tooltip_clear(state){
-        state.hover_tooltip = {
-            x: null, y: null, id: null, type: null,
-        }
+    hover_tooltip_station(state, id = null){
+        state.hover_tooltip_station = id;
     },
 
     //Display
@@ -113,10 +100,12 @@ export default {
     show_map_ref_images: (state, value) => state.display.show_map_ref_images = !!value,
     show_lat_long_lines: (state, value) => state.display.show_lat_long_lines = !!value,
 
-    hide_stations: (state, value) => state.display.hidden.station.all = !!value,
-    hide_stations_minor: (state, value) => state.display.hidden.station.minor = !!value,
-    hide_stations_not_in_use: (state, value) => state.display.hidden.station.not_in_use = !!value,
-    hide_stations_signal_only: (state, value) => state.display.hidden.station.signal_only = !!value,
+    hide_stations: (state, value) => state.display.hidden.station = !!value,
+    hide_stations_minor: (state, value) => state.display.hidden.station_minor = !!value,
+    hide_stations_not_in_use: (state, value) => state.display.hidden.station_not_in_use = !!value,
+    hide_stations_signal_only: (state, value) => state.display.hidden.station_signal_only = !!value,
+    hide_stations_label: (state, value) => state.display.hidden.station_label = !!value,
+    hide_stations_label_minor: (state, value) => state.display.hidden.station_label_minor = !!value,
     lock_stations: (state, value) => state.display.lock_stations = !!value,
 
     map_ref_images_transparency: (state, value) => state.display.map_ref_images_transparency = value,
