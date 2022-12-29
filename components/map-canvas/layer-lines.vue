@@ -5,7 +5,6 @@ import LineSection from './line-section.vue';
 
 export default {
     props: {
-        editable: { type: Boolean, default: false },
     },
 
     mixins: [
@@ -66,7 +65,6 @@ export default {
                 <!-- For Each Line Section in That Line -->
                 <LineSection v-for="line_section in lineSectionsByLine(line.id)" :key="line_section.id"
                     :data="line_section" :data-line="line" :data-line-type="line_type"
-                    :editable="editable"
                 />
             </v-group>
         </v-group>

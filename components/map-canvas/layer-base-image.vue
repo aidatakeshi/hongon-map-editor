@@ -3,7 +3,6 @@ import map_handlers_mx from '~/mixian/map-handlers.mx.js';
 
 export default {
     props: {
-        editable: { type: Boolean, default: false },
     },
 
     mixins: [

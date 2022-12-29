@@ -10,6 +10,8 @@ export default {
     },
 
     async mounted(){
+        //Set Editable
+        this.$store.commit('is_editable', true);
         //Verify Myself
         const response = await this.$POST("hongon", {});
         if (response._status != 200){
@@ -43,5 +45,5 @@ export default {
 </script>
 
 <template>
-    <MapMain editable v-if="authPassed" />
+    <MapMain v-if="authPassed" />
 </template>

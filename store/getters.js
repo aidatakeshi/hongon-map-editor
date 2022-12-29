@@ -1,6 +1,10 @@
 import config from '~/map.config.js';
 
 export default {
+
+    //Editable?
+    is_viewer: (state) => !state.is_editable,
+    is_editor: (state) => state.is_editable,
     
     //Screen Display
     latitude_span: () => (config.map.latitude_max - config.map.latitude_min),

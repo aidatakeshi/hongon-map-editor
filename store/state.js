@@ -2,6 +2,9 @@ import config from '~/map.config.js';
 
 export default () => ({
 
+    //Editable?
+    is_editable: false,
+
     //Screen Display
     screen_width: window ? window.innerWidth : null,
     screen_height: window ? window.innerHeight : null,

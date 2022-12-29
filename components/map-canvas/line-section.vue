@@ -3,7 +3,6 @@ import map_calc_screen_mx from '~/mixian/map-calc-screen.mx.js';
 
 export default {
     props: {
-        editable: { type: Boolean, default: false },
         data: { type: Object, default: ()=>{} },
         dataLine: { type: Object, default: ()=>{} },
         dataLineType: { type: Object, default: ()=>{} },
@@ -194,7 +193,7 @@ export default {
             const {px_per_km} = this.$store.getters;
             const decoration = this.lineConfig.decoration;
             if (!decoration) return null;
-            return Math.max(decoration.width.px, decoration.width.km * px_per_km);
+            return Math.max(decoration.lineWidth.px, decoration.lineWidth.km * px_per_km);
         },
         decorationLineDash(){
             const {px_per_km} = this.$store.getters;

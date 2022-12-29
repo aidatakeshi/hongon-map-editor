@@ -2,7 +2,6 @@
 
 export default {
     props: {
-        editable: { type: Boolean, default: false },
         data: { type: Object, default: ()=>{} },
         x: Number,
         y: Number,

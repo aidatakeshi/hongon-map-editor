@@ -13,7 +13,6 @@ import MapHoverTooltip from './map-hover-tooltip.vue';
 
 export default {
     props: {
-        editable: { type: Boolean, default: false },
     },
 
     mixins: [
@@ -68,15 +67,15 @@ export default {
         <!-- Canvas ------------------------------------------------------------------------------>
         <v-stage :config="stageConfig" @wheel="handleWheelRoll">
             <!-- Base Image (Draggable) -->
-            <LayerBaseImage :editable="editable" />
+            <LayerBaseImage />
             <!-- Ref Images -->
-            <LayerRefImages v-if="editable" />
+            <LayerRefImages />
             <!-- Lines -->
-            <LayerLines :editable="editable" />
+            <LayerLines />
             <!-- Stations -->
-            <LayerStations :editable="editable" />
+            <LayerStations />
             <!-- Lat/Long Lines, Scale -->
-            <LayerOverlay :editable="editable" />
+            <LayerOverlay />
         </v-stage>
 
         <!-- Hover Tooltip -->

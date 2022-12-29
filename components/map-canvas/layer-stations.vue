@@ -5,7 +5,6 @@ import Station from './station.vue';
 
 export default {
     props: {
-        editable: { type: Boolean, default: false },
     },
 
     mixins: [
@@ -86,7 +85,7 @@ export default {
         <v-group v-if="isDisplayStationGroup(false)">
             <Station v-for="station in minorStations" :key="station.id"
                 v-if="isDisplayStation(station)"
-                :data="station" :editable="editable"
+                :data="station"
                 :x="getScreenX(station.x)" :y="getScreenY(station.y)"
             />
         </v-group>
@@ -94,7 +93,7 @@ export default {
         <v-group v-if="isDisplayStationGroup(true)">
             <Station v-for="station in majorStations" :key="station.id"
                 v-if="isDisplayStation(station)"
-                :data="station" :editable="editable"
+                :data="station"
                 :x="getScreenX(station.x)" :y="getScreenY(station.y)"
             />
         </v-group>

@@ -125,7 +125,7 @@ export default {
                 name: "Major",
                 lineWidth: {px: 6, km: 0.2},
                 decoration: {
-                    width: {px: 3, km: 0.1},
+                    lineWidth: {px: 3, km: 0.1},
                     color: 'rgba(255, 255, 255, 0.8)',
                     dash: {px: 9, km: 0.3},
                 },
@@ -140,7 +140,7 @@ export default {
                 name: "Default",
                 lineWidth: {px: 4, km: 0.1},
                 decoration: {
-                    width: {px: 2, km: 0.05},
+                    lineWidth: {px: 2, km: 0.05},
                     color: 'rgba(255, 255, 255, 0.8)',
                     dash: {px: 6, km: 0.15},
                 },
