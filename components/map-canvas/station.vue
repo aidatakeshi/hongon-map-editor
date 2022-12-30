@@ -41,6 +41,12 @@ export default {
     },
 
     computed: {
+        isDisplay(){
+            if (this.x === undefined || this.x === null) return false;
+            if (this.y === undefined || this.y === null) return false;
+            return true;
+        },
+
         stationConfig(){
             const {major, minor, signal} = this.$config.station;
             if (this.data.is_signal_only) return signal;
@@ -112,7 +118,7 @@ export default {
 </script>
 
 <template>
-    <v-group :config="{x: x, y: y}"
+    <v-group :config="{x: x, y: y}" v-if="isDisplay"
         @mouseenter="setHoverTooltip"
         @mouseleave="clearHoverTooltip"
         @mouseup="handleClicked" @touchend="handleClicked"

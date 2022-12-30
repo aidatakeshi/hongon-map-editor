@@ -11,6 +11,10 @@ import LayerOverlay from './map-canvas/layer-overlay.vue';
 
 import MapHoverTooltip from './map-hover-tooltip.vue';
 
+import MapPanelViewerStation from './map-panel/viewer-station.vue';
+import MapPanelViewerLineSection from './map-panel/viewer-line-section.vue';
+
+
 export default {
     props: {
     },
@@ -20,10 +24,9 @@ export default {
     ],
 
     components: {
-        LayerBaseImage, LayerRefImages,
-        LayerLines, LayerStations,
-        LayerOverlay,
+        LayerBaseImage, LayerRefImages, LayerLines, LayerStations, LayerOverlay,
         MapHoverTooltip,
+        MapPanelViewerStation, MapPanelViewerLineSection,
     },
 
     async mounted(){
@@ -81,12 +84,23 @@ export default {
         <!-- Hover Tooltip -->
         <MapHoverTooltip />
 
-        <!-- Panel ------------------------------------------------------------------------------->
-        <div style="position: absolute; left: 0; top: 0; background-color: white;">
-            {{$store.state.logzoom}}
-        </div>
+        <!-- Panels ------------------------------------------------------------------------------>
+        <template v-if="$store.state.is_editable">
+            <!-- Editor Mode -->
+
+        </template>
+        <template v-else>
+            <!-- Viewer Mode -->
+            <MapPanelViewerStation v-if="$store.state.selected_type == 'station'" />
+            <!-- Viewer Mode -->
+            <MapPanelViewerLineSection v-if="$store.state.selected_type == 'line_section'" />
+
+        </template>
 
         <!-- Menu -------------------------------------------------------------------------------->
+
+
+        <!-- Modals ------------------------------------------------------------------------------>
 
         
     </div>

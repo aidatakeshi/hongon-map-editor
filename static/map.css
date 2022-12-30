@@ -3,6 +3,8 @@
     height: 100vh;
 }
 
+/* Hover Tooltip */
+
 .map-hover-tooltip-line{
     position: fixed;
     padding: 0.2rem;
@@ -22,4 +24,68 @@
     border: solid 1px rgba(0, 0, 0, 1);
     color: white;
     font-size: 0.9rem;
+}
+
+/* Map Panel */
+
+.map-panel{
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    /* Wide Mode */
+    top: 10px;
+    left: 10px;
+    width: 340px;
+    max-height: calc(100vh - 50px);
+}
+@media only screen and (max-width: 800px) { /* Narrow Only */
+    .map-panel{
+        top: auto;
+        bottom: 0px;
+        left: 0px;
+        width: 100vw;
+        max-height: 50vh;
+    }
+}
+
+.map-panel-head{
+    padding: 5px;
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    border: solid 1px #ccc;
+    background-color: #f8f9fa;
+    border-radius: 10px 10px 0 0;
+    font-weight: bold;
+}
+@media only screen and (min-width: 801px) { /* Wide Only */
+    .map-panel-head:last-child{
+        border-radius: 10px;
+    }
+}
+
+.map-panel-body{
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 5px;
+    border: solid 1px #ccc;
+    background-color: white;
+}
+.map-panel-body::-webkit-scrollbar{
+    width: 10px;
+    background-color: #eee;
+}
+.map-panel-body::-webkit-scrollbar-thumb {
+    background: #999;
+}
+@media only screen and (min-width: 801px) { /* Wide Only */
+    .map-panel-body{
+        border-radius: 0 0 5px 5px;
+    }
+    .map-panel-body::-webkit-scrollbar{
+        border-radius: 0 0 5px 5px;
+    }
+    .map-panel-body::-webkit-scrollbar-thumb {
+        border-radius: 5px;
+    }
 }
