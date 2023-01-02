@@ -15,6 +15,7 @@
     "core-js": "^3.6.5",
     "konva": "^7.2.4",
     "nuxt": "^2.14.6",
+    "uuid-encoder": "^1.2.0",
     "vue-colour-picker": "0.0.5",
     "vue-konva": "^2.1.7",
     "vuedraggable": "^2.24.3"

@@ -1,9 +1,11 @@
 <script>
+import map_station_mx from '~/mixian/map-station.mx.js';
 
 import { BIcon, BIconXLg } from 'bootstrap-vue';
 
 export default {
     mixins: [
+        map_station_mx,
     ],
 
     components: {
@@ -58,17 +60,20 @@ export default {
 
             <!-- Header Text -->
             <div>
-                <span>
+                <span v-if="station.name_chi">
                     {{station.name_chi}}
                 </span>
-                <span class="-small" v-if="station.name_short_chi">
+                <span v-if="station.name_short_chi">
                     ({{station.name_short_chi}})
                 </span>
-                <span class="-small">
+                <span v-if="station.name_eng">
                     {{station.name_eng}}
                 </span>
-                <span class="-small" v-if="station.name_short_eng">
+                <span v-if="station.name_short_eng">
                     ({{station.name_short_eng}})
+                </span>
+                <span v-if="!station.name_chi && !station.name_eng" style="font-style: italic;">
+                    #{{getStationBase36Code(station)}}
                 </span>
             </div>
 
