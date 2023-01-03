@@ -50,17 +50,20 @@
 
 .map-panel-head{
     padding: 5px;
-    min-height: 40px;
     display: flex;
     align-items: center;
     border: solid 1px #ccc;
     background-color: #f8f9fa;
-    border-radius: 10px 10px 0 0;
     font-weight: bold;
+}
+.map-panel-head:first-child{
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
 }
 @media only screen and (min-width: 801px) { /* Wide Only */
     .map-panel-head:last-child{
-        border-radius: 10px;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
     }
 }
 
@@ -79,7 +82,7 @@
     background: #999;
 }
 @media only screen and (min-width: 801px) { /* Wide Only */
-    .map-panel-body{
+    .map-panel-body:last-child{
         border-radius: 0 0 5px 5px;
     }
     .map-panel-body::-webkit-scrollbar{

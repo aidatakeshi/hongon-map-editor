@@ -1,11 +1,11 @@
 <script>
-import map_station_mx from '~/mixian/map-station.mx.js';
+import map_line_station_mx from '~/mixian/map-line-station.mx.js';
 
 import { BIcon, BIconXLg } from 'bootstrap-vue';
 
 export default {
     mixins: [
-        map_station_mx,
+        map_line_station_mx,
     ],
 
     components: {
@@ -27,18 +27,17 @@ export default {
 
     computed: {
         station(){
-            const {selected_id} = this.$store.state;
-            return this.$store.state.data.station.filter(item => item.id == selected_id)[0];
+            return this.getStationByID(this.$store.state.selected_id);
         },
         operator(){
             if (!this.station) return null;
             const {major_operator_id} = this.station;
-            return this.$store.state.data.operator.filter(item => item.id == major_operator_id)[0];
+            return this.getOperatorByID(major_operator_id);
         },
         region(){
             if (!this.station) return null;
             const {region_id} = this.station;
-            return this.$store.state.data.region.filter(item => item.id == region_id)[0];
+            return this.getRegionByID(region_id);
         },
         latLongString(){
             if (!this.station) return null;
@@ -56,33 +55,28 @@ export default {
 
 <template>
     <div class="map-panel" v-if="station">
-        <div class="map-panel-head">
 
+        <div class="map-panel-head">
             <!-- Header Text -->
-            <div>
-                <span v-if="station.name_chi">
+            <div v-if="station.name_chi || station.name_chi">
+                <span>
                     {{station.name_chi}}
+                    <template v-if="station.name_short_chi">({{station.name_short_chi}})</template>
                 </span>
-                <span v-if="station.name_short_chi">
-                    ({{station.name_short_chi}})
-                </span>
-                <span v-if="station.name_eng">
+                <span style="font-size: 90%;">
                     {{station.name_eng}}
-                </span>
-                <span v-if="station.name_short_eng">
-                    ({{station.name_short_eng}})
-                </span>
-                <span v-if="!station.name_chi && !station.name_eng" style="font-style: italic;">
-                    #{{getStationBase36Code(station)}}
+                    <template v-if="station.name_short_eng">({{station.name_short_eng}})</template>
                 </span>
             </div>
-
+            <div v-else style="font-style: italic">
+                #{{getStationBase36Code(station.id)}}
+            </div>
             <!-- Close Button -->
             <b-button variant="light" size="sm" class="ml-auto p-1" @click="$store.commit('selected_clear')">
                 <b-icon-x-lg />
             </b-button>
-
         </div>
+
         <div class="map-panel-body">
             <div class="row py-1">
                 <div class="col-4">主要營運者:</div>
@@ -121,13 +115,29 @@ export default {
                     </b-badge>
                 </div>
             </div>
+            <div class="row py-1">
+                <div class="col-4">停靠路線:</div>
+                <div class="col-8">
+                    <b-button-group vertical class="w-100">
+                        <b-button v-for="line_section in getLineSectionsOfStation(station.id)"
+                            variant="light" block size="sm" class="text-left font-weight-bold px-1"
+                            @click="$store.commit('selected_line_section', line_section.id)"
+                        >
+                            <color-box :color="line_section.color" />
+                            <span>{{line_section.line.name_chi}}</span>
+                            <span v-if="line_section.name_chi">({{line_section.name_chi}})</span>
+                        </b-button>
+                    </b-button-group>
+                </div>
+            </div>
             <div class="py-1" v-if="station.remarks">
                 <div class="-bold">備註:</div>
                 <b-card body-class="p-1 -small">
-                    <span class="-remarks">{{station.remarks}}</span>
+                    <span class="remarks">{{station.remarks}}</span>
                 </b-card>
             </div>
         </div>
+
     </div>
 </template>
 
@@ -139,5 +149,10 @@ export default {
     .map-panel-body small{
         font-size: 0.72rem;
         font-weight: bold;
+    }
+    .remarks{
+        white-space: pre-line;
+        font-size: 0.8rem;
+        font-weight: normal;
     }
 </style>
