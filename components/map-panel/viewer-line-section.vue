@@ -132,12 +132,17 @@ export default {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(item, i) in line_section.stations" :let="station = getStationByID(item.station_id)">
+                        <tr v-for="(item, i) in line_section.stations">
                             <td>
                                 <small>#{{i+1}}</small>
                             </td>
                             <td>
-                                {{station.name_chi}}<br/><small>{{station.name_eng}}</small>
+                                <template v-if="station = getStationByID(item.station_id)">
+                                    <b-button variant="light" block size="sm" class="font-weight-bold p-0"
+                                    @click="$store.commit('selected_station', getStationByID(item.station_id).id)">
+                                        {{station.name_chi}}<br/><small>{{station.name_eng}}</small>
+                                    </b-button>
+                                </template>
                             </td>
                             <td>
                                 {{item.distance_km ? item.distance_km.toFixed(1) : '-'}}
@@ -174,6 +179,9 @@ export default {
         line-height: 1em;
         font-weight: normal;
         vertical-align: middle;
+    }
+    .map-panel-body table td button{
+        line-height: 1em;
     }
     .line-name{
         line-height: 1.1em;
