@@ -90,9 +90,9 @@ export default {
                     </div>
                 </div>
             </div>
-            <div class="row py-1">
+            <div class="row py-1" v-if="line.name_short_eng || line.name_short_chi">
                 <div class="col-4">路線簡稱:</div>
-                <div class="col-8 d-flex align-items-justify" v-if="line.name_short_eng || line.name_short_chi">
+                <div class="col-8 d-flex align-items-justify">
                     <span v-if="line.name_short_chi">
                         {{line.name_short_chi}}
                         <small v-if="line_section.name_short_chi">({{line_section.name_short_chi}})</small>
@@ -134,13 +134,25 @@ export default {
                     <tbody>
                         <tr v-for="(item, i) in line_section.stations">
                             <td>
-                                <small>#{{i+1}}</small>
+                                #{{i+1}}
                             </td>
                             <td>
                                 <template v-if="station = getStationByID(item.station_id)">
                                     <b-button variant="light" block size="sm" class="font-weight-bold p-0"
                                     @click="$store.commit('selected_station', getStationByID(item.station_id).id)">
-                                        {{station.name_chi}}<br/><small>{{station.name_eng}}</small>
+                                        <template v-if="station.name_chi || station.name_eng">
+                                            <div>
+                                                {{station.name_chi}}
+                                                <template v-if="station.name_short_chi">({{station.name_short_chi}})</template>
+                                            </div>
+                                            <div style="font-size: 90%;">
+                                                {{station.name_eng}}
+                                                <template v-if="station.name_short_eng">({{station.name_short_eng}})</template>
+                                            </div>
+                                        </template>
+                                        <div v-else style="font-style: italic">
+                                            #{{getStationBase36Code(station.id)}}
+                                        </div>
                                     </b-button>
                                 </template>
                             </td>
@@ -176,11 +188,11 @@ export default {
     }
     .map-panel-body table td{
         padding: 0.25em;
-        line-height: 1em;
-        font-weight: normal;
+        font-size: 0.9em;
         vertical-align: middle;
     }
     .map-panel-body table td button{
+        font-size: 0.9em;
         line-height: 1em;
     }
     .line-name{

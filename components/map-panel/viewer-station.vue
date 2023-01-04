@@ -58,7 +58,7 @@ export default {
 
         <div class="map-panel-head">
             <!-- Header Text -->
-            <div v-if="station.name_chi || station.name_chi">
+            <div v-if="station.name_chi || station.name_eng">
                 <span>
                     {{station.name_chi}}
                     <template v-if="station.name_short_chi">({{station.name_short_chi}})</template>
