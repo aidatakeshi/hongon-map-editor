@@ -3,7 +3,14 @@
     height: 100vh;
 }
 
-/* Hover Tooltip */
+@media only screen and (max-width: 800px) {
+    .wide-only{ display: none; }
+}
+@media only screen and (min-width: 801px) {
+    .narrow-only{ display: none; }
+}
+
+/* Hover Tooltip ------------------------------------------------------------------------------- */
 
 .map-hover-tooltip-line{
     position: fixed;
@@ -26,7 +33,7 @@
     font-size: 0.9rem;
 }
 
-/* Map Panel */
+/* Map Panel ----------------------------------------------------------------------------------- */
 
 .map-panel{
     position: fixed;
@@ -36,9 +43,9 @@
     top: 10px;
     left: 10px;
     width: 340px;
-    max-height: calc(100vh - 60px);
+    max-height: calc(100vh - 20px);
 }
-@media only screen and (max-width: 800px) { /* Narrow Only */
+@media only screen and (max-width: 800px) { /* Narrow Mode */
     .map-panel{
         top: auto;
         bottom: 0px;
@@ -90,5 +97,39 @@
     }
     .map-panel-body::-webkit-scrollbar-thumb {
         border-radius: 5px;
+    }
+}
+
+/* Display Menu -------------------------------------------------------------------------------- */
+
+.menu_display{
+    position: fixed;
+    display: flex;
+    gap: 5px;
+    /* Wide Mode */
+    bottom: 10px;
+    right: 10px;
+}
+.menu_display > button{
+    padding: 2px 5px;
+    height: 30px;
+    min-width: 30px;
+    border: solid 2px #999;
+}
+.menu_display > button:hover{
+    border: solid 2px #999;
+}
+.menu_display > button:active{
+    border: solid 2px #999;
+}
+@media only screen and (max-width: 800px) { /* Narrow Mode */
+    .menu_display{
+        bottom: auto;
+        right: auto;
+        top: 5px;
+        left: 5px;
+    }
+    .menu_display > button > label{
+        display: none;
     }
 }

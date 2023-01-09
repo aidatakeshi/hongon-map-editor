@@ -44,8 +44,14 @@ export default {
             </div>
             <!-- Close Button -->
             <b-button variant="light" size="sm" class="ml-auto p-1" @click="toggleInfoPanel()">
-                <b-icon-chevron-up v-if="$store.state.info_panel.open" />
-                <b-icon-chevron-down v-else />
+                <template v-if="$store.state.info_panel.open">
+                    <span class="wide-only"><b-icon-chevron-up /></span>
+                    <span class="narrow-only"><b-icon-chevron-down /></span>
+                </template>
+                <template v-else>
+                    <span class="wide-only"><b-icon-chevron-down /></span>
+                    <span class="narrow-only"><b-icon-chevron-up /></span>
+                </template>
             </b-button>
         </div>
 

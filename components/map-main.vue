@@ -18,6 +18,8 @@ import MapPanelEditorDefault from './map-panel/editor-default.vue';
 import MapPanelEditorLineSection from './map-panel/editor-line-section.vue';
 import MapPanelEditorStation from './map-panel/editor-station.vue';
 
+import ModalDisplaySettings from './modals/display-settings.vue';
+
 
 export default {
     props: {
@@ -32,6 +34,7 @@ export default {
         MapHoverTooltip, MapMenu,
         MapPanelViewerStation, MapPanelViewerLineSection,
         MapPanelEditorDefault, MapPanelEditorLineSection, MapPanelEditorStation,
+        ModalDisplaySettings,
     },
 
     async mounted(){
@@ -48,6 +51,12 @@ export default {
     beforeDestroy(){
         //Remove Listeners
         this.removeListeners();
+    },
+
+    methods: {
+        showModal(modalName){
+            this.$refs['modal-'+modalName].show();
+        },
     },
 
     computed: {
@@ -105,10 +114,10 @@ export default {
         </template>
 
         <!-- Menu -------------------------------------------------------------------------------->
-        <MapMenu />
+        <MapMenu @modal="showModal" />
 
         <!-- Modals ------------------------------------------------------------------------------>
-
+        <ModalDisplaySettings ref="modal-display-settings" />
         
     </div>
 </template>
