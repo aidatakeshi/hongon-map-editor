@@ -10,9 +10,13 @@ import LayerStations from './map-canvas/layer-stations.vue';
 import LayerOverlay from './map-canvas/layer-overlay.vue';
 
 import MapHoverTooltip from './map-hover-tooltip.vue';
+import MapMenu from './map-menu.vue';
 
 import MapPanelViewerStation from './map-panel/viewer-station.vue';
 import MapPanelViewerLineSection from './map-panel/viewer-line-section.vue';
+import MapPanelEditorDefault from './map-panel/editor-default.vue';
+import MapPanelEditorLineSection from './map-panel/editor-line-section.vue';
+import MapPanelEditorStation from './map-panel/editor-station.vue';
 
 
 export default {
@@ -25,8 +29,9 @@ export default {
 
     components: {
         LayerBaseImage, LayerRefImages, LayerLines, LayerStations, LayerOverlay,
-        MapHoverTooltip,
+        MapHoverTooltip, MapMenu,
         MapPanelViewerStation, MapPanelViewerLineSection,
+        MapPanelEditorDefault, MapPanelEditorLineSection, MapPanelEditorStation,
     },
 
     async mounted(){
@@ -87,18 +92,20 @@ export default {
         <!-- Panels ------------------------------------------------------------------------------>
         <template v-if="$store.state.is_editable">
             <!-- Editor Mode -->
+            <MapPanelEditorDefault v-if="!$store.state.selected_type" />
+            <MapPanelEditorStation v-if="$store.state.selected_type == 'station'" />
+            <MapPanelEditorLineSection v-if="$store.state.selected_type == 'line_section'" />
 
         </template>
         <template v-else>
             <!-- Viewer Mode -->
             <MapPanelViewerStation v-if="$store.state.selected_type == 'station'" />
-            <!-- Viewer Mode -->
             <MapPanelViewerLineSection v-if="$store.state.selected_type == 'line_section'" />
 
         </template>
 
         <!-- Menu -------------------------------------------------------------------------------->
-
+        <MapMenu />
 
         <!-- Modals ------------------------------------------------------------------------------>
 

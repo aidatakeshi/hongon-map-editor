@@ -10,9 +10,20 @@ export default {
                 commit(attr, parseFloat(value));
             }
         }
-        //"display" JSON
-        const value = localStorage.getItem('display');
+        //"info_panel" JSON
         try{
+            const value = localStorage.getItem('info_panel');
+            const value_parsed = JSON.parse(value);
+            let info_panel = {};
+            for (let attr in state.info_panel){
+                info_panel[attr] = (value_parsed[attr] !== undefined)
+                ? value_parsed[attr] : state.info_panel[attr];
+            }
+            commit('info_panel', info_panel);
+        }catch(error){}
+        //"display" JSON
+        try{
+            const value = localStorage.getItem('display');
             const value_parsed = JSON.parse(value);
             let display = {};
             for (let attr in state.display){
@@ -41,6 +52,12 @@ export default {
         if (!localStorage) return false;
         console.log('%c LocalStorage: Saving display Data', 'color: fuchsia;');
         localStorage.setItem('display', JSON.stringify(state.display));
+    },
+
+    setLSInfoPanel({ state, commit }) {
+        if (!localStorage) return false;
+        console.log('%c LocalStorage: Saving info panel Data', 'color: fuchsia;');
+        localStorage.setItem('info_panel', JSON.stringify(state.info_panel));
     },
 
 }

@@ -63,9 +63,18 @@ export default {
     not_dragging: (state) => state.is_dragging = false,
     is_scrolling: (state) => state.is_scrolling = true,
     not_scrolling: (state) => state.is_scrolling = false,
-    info_panel_open: (state) => state.info_panel_open = true,
-    info_panel_close: (state) => state.info_panel_open = false,
-    info_panel_toggle: (state) => state.info_panel_open = !state.info_panel_open,
+
+    //Info Panel
+    info_panel(state, value){
+        for (let key in value){
+            if (state.info_panel[key] !== undefined){
+                state.info_panel[key] = value[key];
+            }
+        }
+    },
+    info_panel_open: (state) => state.info_panel.open = true,
+    info_panel_close: (state) => state.info_panel.open = false,
+    info_panel_toggle: (state) => state.info_panel.open = !state.info_panel.open,
 
     //Selection
     selected_line_section(state, id){

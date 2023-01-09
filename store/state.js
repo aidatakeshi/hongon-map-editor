@@ -24,7 +24,6 @@ export default () => ({
     is_loading: false,
     is_dragging: false,
     is_scrolling: false,
-    info_panel_open: false,
 
     //Selection
     selected_type: null,
@@ -33,6 +32,11 @@ export default () => ({
     //Hover Tooltip
     hover_tooltip_line_section: null,
     hover_tooltip_station: null,
+
+    //Info Panel
+    info_panel: {
+        open: false,
+    },
 
     //Display
     display: {
