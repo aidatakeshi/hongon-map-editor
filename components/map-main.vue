@@ -13,9 +13,9 @@ import MapHoverTooltip from './map-hover-tooltip.vue';
 import MapMenu from './map-menu.vue';
 
 import MapPanelViewerStation from './map-panel/viewer-station.vue';
-import MapPanelViewerLineSection from './map-panel/viewer-line-section.vue';
+import MapPanelViewerLine from './map-panel/viewer-line.vue';
 import MapPanelEditorDefault from './map-panel/editor-default.vue';
-import MapPanelEditorLineSection from './map-panel/editor-line-section.vue';
+import MapPanelEditorLine from './map-panel/editor-line.vue';
 import MapPanelEditorStation from './map-panel/editor-station.vue';
 
 import ModalDisplaySettings from './modals/display-settings.vue';
@@ -32,8 +32,8 @@ export default {
     components: {
         LayerBaseImage, LayerRefImages, LayerLines, LayerStations, LayerOverlay,
         MapHoverTooltip, MapMenu,
-        MapPanelViewerStation, MapPanelViewerLineSection,
-        MapPanelEditorDefault, MapPanelEditorLineSection, MapPanelEditorStation,
+        MapPanelViewerStation, MapPanelViewerLine,
+        MapPanelEditorDefault, MapPanelEditorLine, MapPanelEditorStation,
         ModalDisplaySettings,
     },
 
@@ -69,7 +69,7 @@ export default {
         cursor(){
             if (this.$store.state.is_loading) return 'wait';
             if (this.$store.state.is_dragging) return 'move';
-            if (this.$store.state.hover_tooltip_line_section) return 'pointer';
+            if (this.$store.state.hover_tooltip_line) return 'pointer';
             if (this.$store.state.hover_tooltip_station) return 'pointer';
             return 'default';
         },
@@ -103,13 +103,13 @@ export default {
             <!-- Editor Mode -->
             <MapPanelEditorDefault v-if="!$store.state.selected_type" />
             <MapPanelEditorStation v-if="$store.state.selected_type == 'station'" />
-            <MapPanelEditorLineSection v-if="$store.state.selected_type == 'line_section'" />
+            <MapPanelEditorLine v-if="$store.state.selected_type == 'line_section'" />
 
         </template>
         <template v-else>
             <!-- Viewer Mode -->
             <MapPanelViewerStation v-if="$store.state.selected_type == 'station'" />
-            <MapPanelViewerLineSection v-if="$store.state.selected_type == 'line_section'" />
+            <MapPanelViewerLine v-if="$store.state.selected_type == 'line'" />
 
         </template>
 

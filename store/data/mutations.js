@@ -2,8 +2,8 @@
 
 export default {
 
-    region_broader(state, value_arr){
-        if (Array.isArray(value_arr)) state.region_broader = value_arr;
+    region_group(state, value_arr){
+        if (Array.isArray(value_arr)) state.region_group = value_arr;
     },
     region(state, value_arr){
         if (Array.isArray(value_arr)) state.region = value_arr;
@@ -16,9 +16,6 @@ export default {
     },
     line(state, value_arr){
         if (Array.isArray(value_arr)) state.line = value_arr;
-    },
-    line_section(state, value_arr){
-        if (Array.isArray(value_arr)) state.line_section = value_arr;
     },
     station(state, value_arr){
         if (Array.isArray(value_arr)) state.station = value_arr;

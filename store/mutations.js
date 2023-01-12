@@ -77,22 +77,33 @@ export default {
     info_panel_toggle: (state) => state.info_panel.open = !state.info_panel.open,
 
     //Selection
-    selected_line_section(state, id){
-        state.selected_type = 'line_section';
+    selected_line(state, id){
+        state.selected_type = 'line';
         state.selected_id = id;
+        state.selected_index = 0;
+    },
+    selected_line_index(state, index){
+        if (state.selected_type == 'line'){
+            state.selected_index = index;
+        }
     },
     selected_station(state, id){
         state.selected_type = 'station';
         state.selected_id = id;
+        state.selected_index = null;
     },
     selected_clear(state){
         state.selected_type = null;
         state.selected_id = null;
+        state.selected_index = null;
     },
 
     //Hover Tooltip
-    hover_tooltip_line_section(state, id = null){
-        state.hover_tooltip_line_section = id;
+    hover_tooltip_line(state, id = null){
+        state.hover_tooltip_line = id;
+    },
+    hover_tooltip_line_index(state, index = null){
+        state.hover_tooltip_line_index = index;
     },
     hover_tooltip_station(state, id = null){
         state.hover_tooltip_station = id;
@@ -131,7 +142,6 @@ export default {
 
     hidden_line_types: (state, value) => state.display.hidden.line_types = Array.isArray(value) ? value : [],
     hidden_lines: (state, value) => state.display.hidden_lines = Array.isArray(value) ? value : [],
-    hidden_line_sections: (state, value) => state.display.hidden_line_sections = Array.isArray(value) ? value : [],
     hidden_operator_types: (state, value) => state.display.hidden_operator_types = Array.isArray(value) ? value : [],
     hidden_operators: (state, value) => state.display.hidden_operators = Array.isArray(value) ? value : [],
 

@@ -29,21 +29,16 @@ export default {
             this.mouse_x = e.clientX;
             this.mouse_y = e.clientY;
         },
-
         getLineName(lang = 'chi'){
-            if (!this.line_section) return null;
-            const line_id = this.line_section.line_id;
-            const line = this.getLineByID(line_id);
-            if (!line) return null;
-            if (lang == 'chi'){
-                return line.name_chi + (this.line_section.name_chi ? ` (${this.line_section.name_chi})` : '');
-            }else{
-                return line.name_eng + (this.line_section.name_eng ? ` (${this.line_section.name_eng})` : '');
+            const name1 = (lang == 'chi') ? this.line.name_chi : this.line.name_eng;
+            let name2;
+            if (this.section){
+                name2 = (lang == 'chi') ? this.section.name_chi : this.section.name_eng;
             }
+            return name1 + (name2 ? ` (${name2})` : '');
         },
         getLineOperatorName(){
-            if (!this.line_section) return null;
-            const operator_id = this.line_section.operator_id;
+            const operator_id = this.line.operator_id;
             const operator = this.$store.state.data.operator.filter(item => item.id == operator_id)[0];
             if (!operator) return null;
             return operator.name_chi;
@@ -66,14 +61,17 @@ export default {
     },
 
     computed: {
-        line_section_id(){
-            return this.$store.state.hover_tooltip_line_section;
+        line_id(){
+            return this.$store.state.hover_tooltip_line;
+        },
+        line(){
+            return this.getLineByID(this.line_id);
+        },
+        section(){
+            return this.line.sections[this.$store.state.hover_tooltip_line_index];
         },
         station_id(){
             return this.$store.state.hover_tooltip_station;
-        },
-        line_section(){
-            return this.getLineSectionByID(this.line_section_id);
         },
         station(){
             return this.getStationByID(this.station_id);
@@ -94,7 +92,7 @@ export default {
     <div v-if="!is_moving">
 
         <!-- Tooltip for LineSection -->
-        <div class="map-hover-tooltip-line" :style="style" v-if="line_section">
+        <div class="map-hover-tooltip-line" :style="style" v-if="line">
             <div>
                 {{getLineName('chi')}}
             </div>

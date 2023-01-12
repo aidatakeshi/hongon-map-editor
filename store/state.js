@@ -28,9 +28,11 @@ export default () => ({
     //Selection
     selected_type: null,
     selected_id: null,
+    selected_index: null,
 
     //Hover Tooltip
-    hover_tooltip_line_section: null,
+    hover_tooltip_line: null,
+    hover_tooltip_line_index: null,
     hover_tooltip_station: null,
 
     //Info Panel
@@ -54,7 +56,6 @@ export default () => ({
             station_label_minor: false,
             line_type: [],
             line: [],
-            line_section: [],
             operator_type: [],
             operator: [],
         },

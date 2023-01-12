@@ -2,15 +2,14 @@ const dataTypes = {
     'ref_image': 'ref-image',
     'operator_type': 'operator-type',
     'operator': 'operator',
-    'region_broader': 'region-broader',
+    'region_group': 'region-group',
     'region': 'region',
     'line_type': 'line-type',
     'line': 'line',
-    'line_section': 'line-section',
     'station': 'station',
 };
 const paramsByType = {
-    'line_section': 'segment',
+    'line': 'segments',
 };
 
 export default {

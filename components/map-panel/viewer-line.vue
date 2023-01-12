@@ -26,20 +26,16 @@ export default {
     },
 
     computed: {
-        line_section(){
-            return this.getLineSectionByID(this.$store.state.selected_id);
-        },
         line(){
-            if (!this.line_section) return null;
-            return this.getLineByID(this.line_section.line_id);
+            return this.getLineByID(this.$store.state.selected_id);
         },
         line_type(){
             if (!this.line) return null;
             return this.$store.state.data.line_type.filter(item => item.id === this.line.line_type_id)[0];
         },
         operator(){
-            if (!this.line_section) return null;
-            const {operator_id} = this.line_section;
+            if (!this.line) return null;
+            const {operator_id} = this.line;
             return this.getOperatorByID(operator_id);
         },
     },
@@ -52,17 +48,15 @@ export default {
         <div class="map-panel-head">
             <!-- Line Color -->
             <div>
-                <color-box :color="line_section.color" />
+                <color-box :color="line.color" />
             </div>
             <!-- Header Text -->
             <div class="line-name">
                 <div>
                     {{line.name_chi}}
-                    <template v-if="line_section.name_chi">({{line_section.name_chi}})</template>
                 </div>
                 <div style="font-size: 80%;">
                     {{line.name_eng}}
-                    <template v-if="line_section.name_eng">({{line_section.name_eng}})</template>
                 </div>
             </div>
             <!-- Close Button -->
@@ -95,35 +89,43 @@ export default {
                 <div class="col-8 d-flex align-items-justify">
                     <span v-if="line.name_short_chi">
                         {{line.name_short_chi}}
-                        <small v-if="line_section.name_short_chi">({{line_section.name_short_chi}})</small>
                     </span>
                     <span v-if="line.name_short_eng && line.name_short_chi">/</span>
                     <span v-if="line.name_short_eng">
                         {{line.name_short_eng}}
-                        <small v-if="line_section.name_short_eng">({{line_section.name_short_eng}})</small>
                     </span>
                 </div>
             </div>
             <div class="row py-1">
                 <div class="col-4">最高車速:</div>
                 <div class="col-8 d-flex align-items-justify">
-                    <span>{{line_section.max_speed_kph}} km/h</span>
+                    <span>{{line.max_speed_kph}} km/h</span>
                 </div>
             </div>
-            <div class="py-1" v-if="line.remarks || line_section.remarks">
+            <div class="py-1" v-if="line.remarks">
                 <div class="-bold">備註:</div>
                 <b-card body-class="p-1 -small">
                     <span class="remarks" v-if="line.remarks">{{line.remarks}}</span>
-                    <hr class="my-1" v-if="line.remarks && line_section.remarks" />
-                    <span class="remarks" v-if="line_section.remarks">{{line_section.remarks}}</span>
+                    <hr class="my-1" v-if="line.remarks && line.remarks" />
+                    <span class="remarks" v-if="line.remarks">{{line.remarks}}</span>
                 </b-card>
             </div>
 
-            <template v-if="(line_section.stations || []).length">
+            <b-card v-for="(section, i) in line.sections" class="mt-2" body-class="p-1">
+            
+                <div class="text-center" v-if="section.name_chi || section.name_eng">
+                    {{section.name_chi}}
+                    <span style="font-size: 80%;">{{section.name_eng}}</span>
+                </div>
+                <div class="text-center" v-else-if="line.sections.length > 1">
+                    (主段)
+                </div>
 
-                <hr class="my-1" />
-
-                <table class="table table-bordered text-center mt-2 mb-0">
+                <div v-if="!(section.stations || []).length">
+                    (未有設定車站)
+                </div>
+            
+                <table class="table table-bordered text-center mt-2 mb-0" v-else>
                     <thead class="thead-light">
                         <tr>
                             <th>#</th>
@@ -132,7 +134,7 @@ export default {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(item, i) in line_section.stations">
+                        <tr v-for="(item, i) in section.stations">
                             <td>
                                 #{{i+1}}
                             </td>
@@ -165,8 +167,8 @@ export default {
                         </tr>
                     </tbody>
                 </table>
-                
-            </template>
+            
+            </b-card>
 
         </div>
 

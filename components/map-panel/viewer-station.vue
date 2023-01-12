@@ -119,13 +119,12 @@ export default {
                 <div class="col-4">停靠路線:</div>
                 <div class="col-8">
                     <b-button-group vertical class="w-100">
-                        <b-button v-for="line_section in getLineSectionsOfStation(station.id)"
+                        <b-button v-for="line in getLinesOfStation(station.id)"
                             variant="light" block size="sm" class="text-left font-weight-bold px-1"
-                            @click="$store.commit('selected_line_section', line_section.id)"
+                            @click="$store.commit('selected_linen', line.id)"
                         >
-                            <color-box :color="line_section.color" />
-                            <span>{{line_section.line.name_chi}}</span>
-                            <span v-if="line_section.name_chi">({{line_section.name_chi}})</span>
+                            <color-box :color="line.color" />
+                            <span>{{line.name_chi}}</span>
                         </b-button>
                     </b-button-group>
                 </div>

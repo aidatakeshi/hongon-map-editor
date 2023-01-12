@@ -115,7 +115,7 @@ export default {
             fill: '#ccc',
         },
         highlighter: {
-            extraStrokeWidth: {px: 5, km: 0.2},
+            extraStrokeWidth: {px: 4, km: 0.1},
             stroke: 'yellow',
             fill: 'yellow',
             opacity: 0.5,
@@ -172,7 +172,7 @@ export default {
             lineWidth: {px: 6, km: 0.2},
         },
         highlighter: {
-            extraLineWidth: {px: 3, km: 0.2},
+            extraLineWidth: {px: 4, km: 0.1},
             stroke: 'yellow',
             fill: 'yellow',
             opacity: 0.5,

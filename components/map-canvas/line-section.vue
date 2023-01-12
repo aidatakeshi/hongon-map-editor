@@ -3,9 +3,9 @@ import map_calc_screen_mx from '~/mixian/map-calc-screen.mx.js';
 
 export default {
     props: {
-        data: { type: Object, default: ()=>{} },
-        dataLine: { type: Object, default: ()=>{} },
-        dataLineType: { type: Object, default: ()=>{} },
+        sectionIndex: Number,
+        line: { type: Object, default: ()=>{} },
+        lineType: { type: Object, default: ()=>{} },
     },
 
     mixins: [
@@ -26,10 +26,12 @@ export default {
 
     methods: {
         setHoverTooltip(event){
-            this.$store.commit('hover_tooltip_line_section', this.data.id);
+            this.$store.commit('hover_tooltip_line', this.line.id);
+            this.$store.commit('hover_tooltip_line_index', this.sectionIndex);
         },
         clearHoverTooltip(){
-            this.$store.commit('hover_tooltip_line_section', null);
+            this.$store.commit('hover_tooltip_line', null);
+            this.$store.commit('hover_tooltip_line_index', null);
         },
         handleClicked(){
             //In edit mode, if another item is already selected, omit it.
@@ -37,14 +39,15 @@ export default {
                 if (this.$store.state.selected_type) return false;
             }
             //Set selection
-            this.$store.commit('selected_line_section', this.data.id);
+            this.$store.commit('selected_line', this.line.id);
+            this.$store.commit('selected_line_index', this.sectionIndex);
         },
 
         lineCtx(ctx, shape){
             ctx.beginPath();
             //For each inter-station
-            for (let i in this.data.stations){
-                const interstation = this.data.stations[i];
+            for (let i in this.section.stations){
+                const interstation = this.section.stations[i];
                 const segments = interstation.segments;
                 //If no segments available, skip.
                 if (!segments.length) continue;
@@ -69,7 +72,7 @@ export default {
                     : minLogzoomForBezier === true ? true
                     : logzoom < minLogzoomForBezier;
                 //Check if interstation out of view
-                const isInView = this.isInView(interstation._data);
+                const isInView = this.isInView(interstation);
                 //Case 1: Jump to the next station without drawing
                 if (!isInView){
                     const x = this.getScreenX(segments[segments.length - 1].x);
@@ -118,9 +121,7 @@ export default {
         isDisplaying(){
             const hidden = this.$store.state.display.hidden;
             //Check Whether in View
-            if (!this.isInView(this.data._data || {})) return false;
-            //Check Whether Line Section Hidden
-            if (hidden.line_section.includes(this.lineSectionID)) return false;
+            if (!this.isInView(this.data || {})) return false;
             //Check Whether Line Hidden
             if (hidden.line.includes(this.lineID)) return false;
             //Check Whether Line Type Hidden
@@ -133,26 +134,27 @@ export default {
             return true;
         },
 
-        lineSectionID(){
-            return this.data.id;
+        section(){
+            return this.line.sections[this.sectionIndex];
         },
+
         lineID(){
-            return this.dataLine.id;
+            return this.line.id;
         },
         lineTypeID(){
-            return this.dataLine.line_type_id;
+            return this.line.line_type_id;
         },
         operatorID(){
-            return this.data.operator_id;
+            return this.line.operator_id;
         },
         operatorTypeID(){
-            const operator = this.$store.state.data.operator.filter(operator => operator.id == this.data.operator_id);
+            const operator = this.$store.state.data.operator.filter(operator => operator.id == this.line.operator_id);
             if (!operator.length) return false;
             return operator[0].operator_type_id;
         },
 
         lineConfig(){
-            const {map_thickness} = this.dataLineType;
+            const {map_thickness} = this.lineType;
             const {defaultType} = this.$config.line;
             return this.$config.line.byType[map_thickness || defaultType];
         },
@@ -166,31 +168,31 @@ export default {
             //"line_type"
             switch (this.$store.state.display.line_color){
                 case "line_type":
-                    return this.dataLineType.map_color;
+                    return this.lineType.map_color;
                 case "line":
-                    return this.data.color;
+                    return this.line.color;
                 case "operator_type":
                     if (true){
                         const {operator_id} = this.data;
-                        const operator = this.$store.state.data.operator.filter(item => item.id == operator_id)[0];
+                        const operator = this.$store.state.section.operator.filter(item => item.id == operator_id)[0];
                         if (!operator) return 'black';
                         const {operator_type_id} = operator;
-                        const operator_type = this.$store.state.data.operator_type.filter(item => item.id == operator_type_id)[0];
+                        const operator_type = this.$store.state.section.operator_type.filter(item => item.id == operator_type_id)[0];
                         if (!operator_type) return 'black';
                         return operator_type.map_color || "black";
                     }
                 case "operator":
                     if (true){
                         const {operator_id} = this.data;
-                        const operator = this.$store.state.data.operator.filter(item => item.id == operator_id)[0];
+                        const operator = this.$store.state.section.operator.filter(item => item.id == operator_id)[0];
                         if (!operator) return 'black';
                         return operator.color || 'black';
                     }
                 default:
                     if (this.lineConfig.defaultDisplayLineColor){
-                        return this.data.color;
+                        return this.line.color;
                     }else{
-                        return this.dataLineType.map_color;
+                        return this.lineType.map_color;
                     }
             }
         },
@@ -231,9 +233,10 @@ export default {
         },
 
         isSelected(){
-            if (this.$store.state.selected_type !== 'line_section') return false;
-            if (this.$store.state.selected_id !== this.data.id) return false;
-            return true;
+            if (this.$store.state.selected_type == 'line'){
+                if (this.$store.state.selected_id == this.line.id) return true;
+            }
+            return false;
         },
     },
 }
