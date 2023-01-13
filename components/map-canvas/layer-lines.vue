@@ -60,7 +60,7 @@ export default {
             <!-- For Each Line in That Type -->
             <v-group v-for="line in linesByType(line_type.id)">
                 <!-- For Each Section in That Line -->
-                <LineSection v-for="(section,i) in line.sections" :key="i"
+                <LineSection v-for="(section, i) in line.sections" :key="i"
                     :line="line" :section-index="i"  :line-type="line_type"
                 />
             </v-group>

@@ -199,7 +199,8 @@ export default {
 
         highlighterExtraLineWidth(){
             const {px_per_km} = this.$store.getters;
-            const strokeWidthObj = this.$config.line.highlighter.extraLineWidth;
+            const {highlighter, highlighter2} = this.$config.line;
+            const strokeWidthObj = (this.isSectionSelected ? highlighter : highlighter2).extraLineWidth;
             if (!strokeWidthObj) return null;
             return Math.max(strokeWidthObj.px, strokeWidthObj.km * px_per_km);
         },
@@ -232,11 +233,15 @@ export default {
             return Math.max(widthObj.px, widthObj.km * px_per_km);
         },
 
-        isSelected(){
+        isLineSelected(){
             if (this.$store.state.selected_type == 'line'){
                 if (this.$store.state.selected_id == this.line.id) return true;
             }
             return false;
+        },
+        isSectionSelected(){
+            if (!this.isLineSelected) return false;
+            if (this.$store.state.selected_index == this.sectionIndex) return true;
         },
     },
 }
@@ -260,8 +265,8 @@ export default {
         }"/>
 
         <!-- Selection Highlighter -->
-        <v-shape v-if="isSelected" :config="{
-            ...$config.line.highlighter,
+        <v-shape v-if="isLineSelected" :config="{
+            ...(isSectionSelected ? $config.line.highlighter : $config.line.highlighter2),
             sceneFunc: lineCtx,
             strokeWidth: lineWidth + highlighterExtraLineWidth * 2,
             strokeScaleEnabled: false,

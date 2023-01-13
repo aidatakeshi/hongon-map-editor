@@ -22,7 +22,10 @@ export default {
     },
 
     methods: {
-        
+        selectLineSection(id, index){
+            this.$store.commit('selected_line', id);
+            this.$store.commit('selected_line_index', index);
+        },
     },
 
     computed: {
@@ -121,10 +124,10 @@ export default {
                     <b-button-group vertical class="w-100">
                         <b-button v-for="line in getLinesOfStation(station.id)"
                             variant="light" block size="sm" class="text-left font-weight-bold px-1"
-                            @click="$store.commit('selected_linen', line.id)"
+                            @click="selectLineSection(line.id, line.sectionIndex)"
                         >
                             <color-box :color="line.color" />
-                            <span>{{line.name_chi}}</span>
+                            <span>{{line.display_chi}}</span>
                         </b-button>
                     </b-button-group>
                 </div>

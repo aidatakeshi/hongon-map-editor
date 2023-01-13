@@ -171,11 +171,19 @@ export default {
         hit_area: {
             lineWidth: {px: 6, km: 0.2},
         },
+        //For selected line & section
         highlighter: {
             extraLineWidth: {px: 4, km: 0.1},
             stroke: 'yellow',
             fill: 'yellow',
-            opacity: 0.5,
+            opacity: 0.6,
+        },
+        //For selected line but not selected section
+        highlighter2: {
+            extraLineWidth: {px: 2, km: 0.05},
+            stroke: 'yellow',
+            fill: 'yellow',
+            opacity: 0.4,
         },
     },
 

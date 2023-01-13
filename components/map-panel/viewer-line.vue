@@ -33,6 +33,10 @@ export default {
             if (!this.line) return null;
             return this.$store.state.data.line_type.filter(item => item.id === this.line.line_type_id)[0];
         },
+        section(){
+            if (!this.line) return null;
+            return this.line.sections[this.$store.state.selected_index];
+        },
         operator(){
             if (!this.line) return null;
             const {operator_id} = this.line;
@@ -111,14 +115,21 @@ export default {
                 </b-card>
             </div>
 
-            <b-card v-for="(section, i) in line.sections" class="mt-2" body-class="p-1">
+            <b-card class="my-2" body-class="p-1" v-if="line.sections.length > 1">
+                <b-nav pills>
+                    <b-nav-item v-for="(section, i) in line.sections" link-classes="px-2 py-1"
+                    :active="$store.state.selected_index == i" @click="$store.commit('selected_line_index', i)">
+                        <span v-if="section.name_chi">{{section.name_chi}}</span>
+                        <span v-else>(主段)</span>
+                    </b-nav-item>
+                </b-nav>
+            </b-card>
+
+            <template v-if="section">
             
-                <div class="text-center" v-if="section.name_chi || section.name_eng">
+                <div v-if="section.name_chi || section.name_eng">
                     {{section.name_chi}}
                     <span style="font-size: 80%;">{{section.name_eng}}</span>
-                </div>
-                <div class="text-center" v-else-if="line.sections.length > 1">
-                    (主段)
                 </div>
 
                 <div v-if="!(section.stations || []).length">
@@ -167,8 +178,8 @@ export default {
                         </tr>
                     </tbody>
                 </table>
-            
-            </b-card>
+                
+            </template>
 
         </div>
 
