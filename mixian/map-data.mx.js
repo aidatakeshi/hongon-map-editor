@@ -41,5 +41,17 @@ export default {
             return response;
         },
 
+        updateStoreData(type, id, data){
+
+        },
+
+        newStoreData(type, data){
+
+        },
+
+        removeStoreData(type, id){
+
+        },
+
     },
 }

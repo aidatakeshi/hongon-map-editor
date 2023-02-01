@@ -1,11 +1,12 @@
 <script>
 import map_line_station_mx from '~/mixian/map-line-station.mx.js';
+import map_data_mx from '~/mixian/map-data.mx.js';
 
 import { BIcon, BIconXLg } from 'bootstrap-vue';
 
 export default {
     mixins: [
-        map_line_station_mx,
+        map_line_station_mx, map_data_mx,
     ],
 
     components: {
