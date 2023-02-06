@@ -61,4 +61,18 @@ export default () => ({
         },
     },
 
+    //Data Sending
+    send_data: {
+        trigger_panel: 0,
+        trigger_map: 0,
+        payload: {},
+    },
+
+    //Toast
+    toast: {
+        trigger: 0,
+        content: null,
+        variant: null,
+    },
+
 });

@@ -2,6 +2,7 @@
 
 export default {
     props: {
+        selected: Boolean,
         data: { type: Object, default: ()=>{} },
         x: Number,
         y: Number,
@@ -25,7 +26,9 @@ export default {
 
     methods: {
         setHoverTooltip(){
-            this.$store.commit('hover_tooltip_station', this.data.id);
+            if (!this.$store.state.is_editable || !this.selected){
+                this.$store.commit('hover_tooltip_station', this.data.id);
+            }
         },
         clearHoverTooltip(){
             this.$store.commit('hover_tooltip_station', null);
@@ -37,6 +40,13 @@ export default {
             }
             //Set selection
             this.$store.commit('selected_station', this.data.id);
+        },
+        handleDragged(event){
+            //Get new x, y position of layer_base_map
+            const x = event.target.getAttr('x');
+            const y = event.target.getAttr('y');
+            //Emit to parent
+            this.$emit('dragged', {x, y});
         },
     },
 
@@ -108,20 +118,19 @@ export default {
             return false;
         },
 
-        isSelected(){
-            if (this.$store.state.selected_type !== 'station') return false;
-            if (this.$store.state.selected_id !== this.data.id) return false;
-            return true;
+        isDraggable(){
+            return this.selected && this.$store.state.is_editable;
         },
     },
 }
 </script>
 
 <template>
-    <v-group :config="{x: x, y: y}" v-if="isDisplay"
+    <v-group :config="{x: x, y: y, draggable: isDraggable}" v-if="isDisplay"
         @mouseenter="setHoverTooltip"
         @mouseleave="clearHoverTooltip"
         @mouseup="handleClicked" @touchend="handleClicked"
+        @dragend="handleDragged"
     >
         <!-- Listening Area -->
         <v-circle :config="{
@@ -155,7 +164,7 @@ export default {
             listening: false,
         }" />
 
-        <v-group v-if="isSelected">
+        <v-group v-if="selected">
             <!-- Selection Highlighter (Circle) -->
             <v-circle v-if="!stationConfig.isDiamond" :config="{
                 ...$config.station.highlighter,

@@ -1,30 +1,55 @@
+const handleData = function(state, type, payload){
+    if (Array.isArray(payload)){
+        //Update all items mode
+        state[type] = payload;
+        
+    }else if (typeof payload === 'object'){
+        if (!payload.id){
+            //Insert item mode
 
+        }else if (!payload._delete){
+            //Update item mode
+            for (let i in state[type]){
+                if (state[type][i].id === payload.id){
+                    for (let attr in state[type][i]){
+                        if (payload[attr] !== undefined) state[type][i][attr] = payload[attr];
+                    }
+                    break;
+                }
+            }
+
+        }else{
+            //Remove item mode
+
+        }
+    }
+}
 
 export default {
 
-    region_group(state, value_arr){
-        if (Array.isArray(value_arr)) state.region_group = value_arr;
+    region_group(state, payload){
+        handleData(state, 'region_group', payload);
     },
-    region(state, value_arr){
-        if (Array.isArray(value_arr)) state.region = value_arr;
+    region(state, payload){
+        handleData(state, 'region', payload);
     },
-    ref_image(state, value_arr){
-        if (Array.isArray(value_arr)) state.ref_image = value_arr;
+    ref_image(state, payload){
+        handleData(state, 'ref_image', payload);
     },
-    line_type(state, value_arr){
-        if (Array.isArray(value_arr)) state.line_type = value_arr;
+    line_type(state, payload){
+        handleData(state, 'line_type', payload);
     },
-    line(state, value_arr){
-        if (Array.isArray(value_arr)) state.line = value_arr;
+    line(state, payload){
+        handleData(state, 'line', payload);
     },
-    station(state, value_arr){
-        if (Array.isArray(value_arr)) state.station = value_arr;
+    station(state, payload){
+        handleData(state, 'station', payload);
     },
-    operator_type(state, value_arr){
-        if (Array.isArray(value_arr)) state.operator_type = value_arr;
+    operator_type(state, payload){
+        handleData(state, 'operator_type', payload);
     },
-    operator(state, value_arr){
-        if (Array.isArray(value_arr)) state.operator = value_arr;
+    operator(state, payload){
+        handleData(state, 'operator', payload);
     },
 
 };

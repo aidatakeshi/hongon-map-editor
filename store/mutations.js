@@ -145,4 +145,26 @@ export default {
     hidden_operator_types: (state, value) => state.display.hidden_operator_types = Array.isArray(value) ? value : [],
     hidden_operators: (state, value) => state.display.hidden_operators = Array.isArray(value) ? value : [],
 
+    //Data Sending
+    send_data_to_panel(state, payload){
+        state.send_data.trigger_panel++;
+        state.send_data.payload = payload;
+    },
+    send_data_to_map(state, payload){
+        state.send_data.trigger_map++;
+        state.send_data.payload = payload;
+    },
+
+    //Toast
+    toast_danger(state, content){
+        state.toast.content = content;
+        state.toast.variant = 'danger';
+        state.toast.trigger++;
+    },
+    toast_success(state, content){
+        state.toast.content = content;
+        state.toast.variant = 'success';
+        state.toast.trigger++;
+    },
+
 };

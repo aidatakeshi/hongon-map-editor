@@ -20,6 +20,8 @@ import MapPanelEditorStation from './map-panel/editor-station.vue';
 
 import ModalDisplaySettings from './modals/display-settings.vue';
 
+import ToastHandler from './toast-handler.vue';
+
 
 export default {
     props: {
@@ -35,6 +37,7 @@ export default {
         MapPanelViewerStation, MapPanelViewerLine,
         MapPanelEditorDefault, MapPanelEditorLine, MapPanelEditorStation,
         ModalDisplaySettings,
+        ToastHandler,
     },
 
     async mounted(){
@@ -118,6 +121,9 @@ export default {
 
         <!-- Modals ------------------------------------------------------------------------------>
         <ModalDisplaySettings ref="modal-display-settings" />
+
+        <!-- Misc -------------------------------------------------------------------------------->
+        <ToastHandler />
         
     </div>
 </template>

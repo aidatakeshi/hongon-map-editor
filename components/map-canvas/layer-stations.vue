@@ -17,7 +17,11 @@ export default {
 
     data(){
         return {
-            
+            editing: {
+                "id": null, "name_chi": null, 
+                "x": null,  "y": null,
+                "is_major": null, "is_in_use": null, "is_signal_only": null,
+            },
         };
     },
 
@@ -66,9 +70,27 @@ export default {
             return true;
         },
 
+        handleDragged({x, y}){
+            const $x = this.getLongitude(x);
+            const $y = this.getLatitude(y);
+            this.editing.x = $x;
+            this.editing.y = $y;
+            this.$store.commit('send_data_to_panel', {x: $x, y: $y});
+        },
+
     },
 
     computed: {
+        editable(){
+            return this.$store.state.is_editable;
+        },
+        selected_id(){
+            if (this.$store.state.selected_type == 'station') return this.$store.state.selected_id;
+            return null;
+        },
+        send_data_trigger_map(){
+            return this.$store.state.send_data.trigger_map;
+        },
         majorStations(){
             return this.$store.state.data.station.filter(item => item.is_major);
         },
@@ -76,26 +98,76 @@ export default {
             return this.$store.state.data.station.filter(item => !item.is_major);
         },
     },
+
+    watch: {
+        selected_id(station_id){
+            if (this.editable){
+                //Copy required station data to editing object
+                if (!station_id) return false;
+                const station = this.$store.state.data.station.filter(item => item.id == station_id)[0];
+                if (!station) return false;
+                for (let i in this.editing){
+                    this.editing[i] = station[i];
+                }
+            }
+        },
+        send_data_trigger_map(){
+            const payload = this.$store.state.send_data.payload;
+            for (var i in this.editing){
+                if (payload[i] !== undefined){
+                    this.editing[i] = payload[i];
+                }
+            }
+        },
+    },
 }
 </script>
 
 <template>
     <v-layer ref="layer_stations">
-        <!-- Minor Stations -->
-        <v-group v-if="isDisplayStationGroup(false)">
-            <Station v-for="station in minorStations" :key="station.id"
-                v-if="isDisplayStation(station)"
-                :data="station"
-                :x="getScreenX(station.x)" :y="getScreenY(station.y)"
+
+        <!-- Mode 1: Viewer -->
+        <template v-if="!editable">
+            <!-- Minor Stations (Which are Not Selected) -->
+            <v-group v-if="isDisplayStationGroup(false)">
+                <Station v-for="station in minorStations" :key="station.id"
+                    v-if="isDisplayStation(station)"
+                    :data="station" :selected="selected_id === station.id"
+                    :x="getScreenX(station.x)" :y="getScreenY(station.y)"
+                />
+            </v-group>
+            <!-- Major Stations (Which are Not Selected) -->
+            <v-group v-if="isDisplayStationGroup(true)">
+                <Station v-for="station in majorStations" :key="station.id"
+                    v-if="isDisplayStation(station)"
+                    :data="station" :selected="selected_id === station.id"
+                    :x="getScreenX(station.x)" :y="getScreenY(station.y)"
+                />
+            </v-group>
+        </template>
+
+        <!-- Mode 2: Editor -->
+        <template v-else>
+            <!-- Minor Stations (Which are Not Selected) -->
+            <v-group v-if="isDisplayStationGroup(false)">
+                <Station v-for="station in minorStations" :key="station.id"
+                    v-if="isDisplayStation(station) && selected_id !== station.id"
+                    :data="station" :x="getScreenX(station.x)" :y="getScreenY(station.y)"
+                />
+            </v-group>
+            <!-- Major Stations (Which are Not Selected) -->
+            <v-group v-if="isDisplayStationGroup(false)">
+                <Station v-for="station in majorStations" :key="station.id"
+                    v-if="isDisplayStation(station) && selected_id !== station.id"
+                    :data="station" :x="getScreenX(station.x)" :y="getScreenY(station.y)"
+                />
+            </v-group>
+            <!-- Selected Station (using editing object) -->
+            <Station v-if="selected_id" selected
+                :data="editing" :x="getScreenX(editing.x)" :y="getScreenY(editing.y)"
+                @dragged="handleDragged"
             />
-        </v-group>
-        <!-- Major Stations -->
-        <v-group v-if="isDisplayStationGroup(true)">
-            <Station v-for="station in majorStations" :key="station.id"
-                v-if="isDisplayStation(station)"
-                :data="station"
-                :x="getScreenX(station.x)" :y="getScreenY(station.y)"
-            />
-        </v-group>
+        </template>
+
     </v-layer>
 </template>
