@@ -5,6 +5,7 @@ import map_data_mx from '~/mixian/map-data.mx.js';
 import SelectRegion from './../input/select-region.vue';
 import SelectOperator from './../input/select-operator.vue';
 import InputTrackNumber from './../input/input-track-number.vue';
+import EditorStationSimilarNames from './editor-station-similar-names.vue';
 
 import { BIcon, BIconXLg } from 'bootstrap-vue';
 
@@ -16,6 +17,7 @@ export default {
     components: {
         BIcon, BIconXLg,
         SelectRegion, SelectOperator, InputTrackNumber,
+        EditorStationSimilarNames,
     },
 
     data(){
@@ -33,6 +35,9 @@ export default {
             editing_default: {
                 "tracks": [], "tracks_info": [],
                 "is_major": false, "is_in_use": true, "is_signal_only": false,
+            },
+            isDisplayingSimilarNames: {
+                "eng": false, "chi": false,
             },
             isLoading: false,
             isSaving: false,
@@ -124,15 +129,24 @@ export default {
             <div class="edit-row">
                 <div class="label">名稱</div>
                 <div class="input">
-                    <b-input v-model="editing.name_chi" size="sm" @input="updateMapDisplay" />
+                    <b-input v-model="editing.name_chi" size="sm"
+                        @input="updateMapDisplay"
+                        @focus="isDisplayingSimilarNames.chi = true"
+                        @blur="isDisplayingSimilarNames.chi = false"
+                    />
                 </div>
             </div>
+            <EditorStationSimilarNames :keyword="editing.name_chi" v-if="isDisplayingSimilarNames.chi" />
             <div class="edit-row">
                 <div class="label">Name</div>
                 <div class="input">
-                    <b-input v-model="editing.name_eng" size="sm" />
+                    <b-input v-model="editing.name_eng" size="sm"
+                        @focus="isDisplayingSimilarNames.eng = true"
+                        @blur="isDisplayingSimilarNames.eng = false"
+                    />
                 </div>
             </div>
+            <EditorStationSimilarNames :keyword="editing.name_eng" v-if="isDisplayingSimilarNames.eng" />
             <div class="edit-row">
                 <div class="label">簡稱</div>
                 <div class="input">
